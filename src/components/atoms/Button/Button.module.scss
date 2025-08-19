@@ -1,11 +1,43 @@
 @import "../../../styles/_tokens.scss";
-@import "../../../styles/_mixins.scss";
 
 .button {
-  @include button-base;
-  transition: all var(--motion-transition-normal) ease;
+  // Layout
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Typography (direct from Pulseui.json)
+  font-family: var(--font-text-md-family, "Roboto");
+  font-weight: var(--font-heading-h1-weight, 700);
+
+  // Interactive
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  outline: none;
+  text-decoration: none;
   position: relative;
+  white-space: nowrap;
   overflow: hidden;
+
+  // Focus
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+
+  // Disabled
+  &:disabled {
+    opacity: var(--opacity-50);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Transitions
+  transition: all var(--motion-transition-normal) ease;
+
+  // Border radius
+  border-radius: var(--radius-md);
 
   // Enhanced hover effects
   &:hover:not(:disabled) {
@@ -16,39 +48,39 @@
     // Removed transform and box-shadow
   }
 
-  // Size variants
+  // Size variants (direct from Pulseui.json)
   &.size-xs {
     padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-xs);
-    line-height: var(--line-height-xs);
+    font-size: var(--font-text-xs-size);
+    line-height: var(--font-text-xs-line-height);
     min-height: var(--size-xs);
   }
 
   &.size-sm {
     padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-sm);
-    line-height: var(--line-height-sm);
+    font-size: var(--font-text-sm-size);
+    line-height: var(--font-text-sm-line-height);
     min-height: var(--size-sm);
   }
 
   &.size-md {
     padding: var(--spacing-md) var(--spacing-lg);
-    font-size: var(--font-size-md);
-    line-height: var(--line-height-md);
+    font-size: var(--font-text-md-size);
+    line-height: var(--font-text-md-line-height);
     min-height: var(--size-md);
   }
 
   &.size-lg {
     padding: var(--spacing-lg) var(--spacing-xl);
-    font-size: var(--font-size-lg);
-    line-height: var(--line-height-lg);
+    font-size: var(--font-text-lg-size);
+    line-height: var(--font-text-lg-line-height);
     min-height: var(--size-lg);
   }
 
   &.size-xl {
     padding: var(--spacing-xl) var(--spacing-xxl);
-    font-size: var(--font-size-xl);
-    line-height: var(--line-height-xl);
+    font-size: var(--font-text-xl-size);
+    line-height: var(--font-text-xl-line-height);
     min-height: var(--size-xl);
   }
 
@@ -156,19 +188,34 @@
   // State styles
   &.state-hover {
     &:not(:disabled) {
-      @include interactive-hover;
+      // Interactive hover
+      cursor: pointer;
+      user-select: none;
+      transition: all var(--motion-duration-normal)
+        var(--motion-easing-ease-out);
+
+      &:hover:not(:disabled) {
+        transform: var(--transform-hover);
+        box-shadow: var(--shadow-hover);
+      }
     }
   }
 
   &.state-disabled {
-    @include disabled;
+    // Disabled state
+    opacity: var(--opacity-50);
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   // Icon styles
   .left,
   .right {
     flex-shrink: 0;
-    @include flex-center;
+    // Flex center
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .left {

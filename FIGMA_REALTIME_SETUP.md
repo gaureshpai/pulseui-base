@@ -264,3 +264,4 @@ The script provides detailed logging to help troubleshoot issues.
 ---
 
 **🎉 Congratulations!** You now have real-time Figma token synchronization. Your design system will always stay in sync with your latest Figma changes!
+

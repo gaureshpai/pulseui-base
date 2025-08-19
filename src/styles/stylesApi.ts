@@ -1,6 +1,5 @@
 import * as React from "react";
 import type { CSSProperties } from "react";
-import { defaultTheme } from "./themes";
 
 // Design token types
 export type Spacing = "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
@@ -254,54 +253,50 @@ export const getShadowValue = (shadow: Shadow, theme: Theme): string => {
 };
 
 // SX prop processor
-export const processSxProps = (
-  sx: SxProps,
-  theme: Theme = defaultTheme
-): CSSProperties => {
+export const processSxProps = (sx: SxProps): CSSProperties => {
   const styles: CSSProperties = {};
 
-  // Process spacing
-  if (sx.m !== undefined) styles.margin = getSpacingValue(sx.m, theme);
-  if (sx.mt !== undefined) styles.marginTop = getSpacingValue(sx.mt, theme);
-  if (sx.mr !== undefined) styles.marginRight = getSpacingValue(sx.mr, theme);
-  if (sx.mb !== undefined) styles.marginBottom = getSpacingValue(sx.mb, theme);
-  if (sx.ml !== undefined) styles.marginLeft = getSpacingValue(sx.ml, theme);
+  // Process spacing using CSS custom properties
+  if (sx.m !== undefined) styles.margin = `var(--spacing-${sx.m})`;
+  if (sx.mt !== undefined) styles.marginTop = `var(--spacing-${sx.mt})`;
+  if (sx.mr !== undefined) styles.marginRight = `var(--spacing-${sx.mr})`;
+  if (sx.mb !== undefined) styles.marginBottom = `var(--spacing-${sx.mb})`;
+  if (sx.ml !== undefined) styles.marginLeft = `var(--spacing-${sx.ml})`;
   if (sx.mx !== undefined) {
-    styles.marginLeft = getSpacingValue(sx.mx, theme);
-    styles.marginRight = getSpacingValue(sx.mx, theme);
+    styles.marginLeft = `var(--spacing-${sx.mx})`;
+    styles.marginRight = `var(--spacing-${sx.mx})`;
   }
   if (sx.my !== undefined) {
-    styles.marginTop = getSpacingValue(sx.my, theme);
-    styles.marginBottom = getSpacingValue(sx.my, theme);
+    styles.marginTop = `var(--spacing-${sx.my})`;
+    styles.marginBottom = `var(--spacing-${sx.my})`;
   }
 
-  if (sx.p !== undefined) styles.padding = getSpacingValue(sx.p, theme);
-  if (sx.pt !== undefined) styles.paddingTop = getSpacingValue(sx.pt, theme);
-  if (sx.pr !== undefined) styles.paddingRight = getSpacingValue(sx.pr, theme);
-  if (sx.pb !== undefined) styles.paddingBottom = getSpacingValue(sx.pb, theme);
-  if (sx.pl !== undefined) styles.paddingLeft = getSpacingValue(sx.pl, theme);
+  if (sx.p !== undefined) styles.padding = `var(--spacing-${sx.p})`;
+  if (sx.pt !== undefined) styles.paddingTop = `var(--spacing-${sx.pt})`;
+  if (sx.pr !== undefined) styles.paddingRight = `var(--spacing-${sx.pr})`;
+  if (sx.pb !== undefined) styles.paddingBottom = `var(--spacing-${sx.pb})`;
+  if (sx.pl !== undefined) styles.paddingLeft = `var(--spacing-${sx.pl})`;
   if (sx.px !== undefined) {
-    styles.paddingLeft = getSpacingValue(sx.px, theme);
-    styles.paddingRight = getSpacingValue(sx.px, theme);
+    styles.paddingLeft = `var(--spacing-${sx.px})`;
+    styles.paddingRight = `var(--spacing-${sx.px})`;
   }
   if (sx.py !== undefined) {
-    styles.paddingTop = getSpacingValue(sx.py, theme);
-    styles.paddingBottom = getSpacingValue(sx.py, theme);
+    styles.paddingTop = `var(--spacing-${sx.py})`;
+    styles.paddingBottom = `var(--spacing-${sx.py})`;
   }
 
-  // Process colors
-  if (sx.color !== undefined) styles.color = getColorValue(sx.color, theme);
+  // Process colors using CSS custom properties
+  if (sx.color !== undefined) styles.color = `var(--color-${sx.color})`;
   if (sx.backgroundColor !== undefined)
-    styles.backgroundColor = getColorValue(sx.backgroundColor, theme);
+    styles.backgroundColor = `var(--color-${sx.backgroundColor})`;
   if (sx.borderColor !== undefined)
-    styles.borderColor = getColorValue(sx.borderColor, theme);
+    styles.borderColor = `var(--color-${sx.borderColor})`;
 
-  // Process typography
+  // Process typography using CSS custom properties
   if (sx.typography !== undefined) {
-    const typography = getTypographyValue(sx.typography, theme);
-    styles.fontSize = typography.fontSize;
-    styles.lineHeight = typography.lineHeight;
-    styles.fontWeight = typography.fontWeight;
+    styles.fontSize = `var(--font-${sx.typography}-size)`;
+    styles.lineHeight = `var(--font-${sx.typography}-line-height)`;
+    styles.fontWeight = `var(--font-${sx.typography}-weight)`;
   }
 
   // Process other properties

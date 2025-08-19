@@ -6,9 +6,9 @@
 
 ```tsx
 import React from "react";
-import { ThemeProvider } from "../../ThemeProvider/ThemeProvider";
+import { SimpleThemeProvider } from "../../SimpleThemeProvider/SimpleThemeProvider";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
-import { useTheme } from "../../../contexts/ThemeContext";
+import { isDark } from "../../../utils/themeUtils";
 ```
 
 ### 2. **Create Theme Wrapper Component**
@@ -204,4 +204,3 @@ style={{ backgroundColor: "var(--color-surface-50)" }}
 - [ ] Update hardcoded colors to CSS variables
 - [ ] Add ThemeShowcase story (optional)
 - [ ] Test both light and dark themes
-

@@ -32,8 +32,7 @@
 // Animation Component
 @import "../components/Animation/Animation.module.scss";
 
-// ThemeProvider Component
-@import "../components/ThemeProvider/ThemeProvider.module.scss";
+// ThemeProvider Component - Removed (using SimpleThemeProvider instead)
 
 // Button Component
 @import "../components/atoms/Button/Button.module.scss";

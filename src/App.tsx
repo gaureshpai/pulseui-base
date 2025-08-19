@@ -1,5 +1,5 @@
-import { ThemeProvider } from "./components/ThemeProvider/ThemeProvider";
-import { useTheme } from "./contexts/ThemeContext";
+import { SimpleThemeProvider } from "./components/SimpleThemeProvider/SimpleThemeProvider";
+import { getThemeName, setTheme } from "./utils/themeUtils";
 import { VariantSelector } from "./components/atoms/VariantSelector/VariantSelector";
 import { Button } from "./components/atoms/Button/Button";
 import { Badge } from "./components/atoms/Badge";
@@ -17,15 +17,29 @@ import { Pill } from "./components/atoms/Pill";
 import { Card } from "./components/atoms/Card";
 import { Tag } from "./components/atoms/Tag";
 import { Avatar } from "./components/atoms/Avatar";
-import { Modal } from "./components/atoms/Modal";
+// import { Modal } from "./components/atoms/Modal"; // Commented out - not used in this showcase
 import { Pagination } from "./components/atoms/Pagination";
 import { PillInput } from "./components/atoms/PillInput";
 import { Radio } from "./components/atoms/Radio";
 import { Stepper } from "./components/atoms/Stepper";
 import { Kbd } from "./components/atoms/Kbd";
+import { PasswordInput } from "./components/atoms/PasswordInput";
+import { ProgressBar } from "./components/atoms/ProgressBar";
+// import { Accordion } from "./components/atoms/Accordion"; // Using preview
+import { DatePicker } from "./components/atoms/DatePicker";
+import { Autocomplete } from "./components/atoms/Autocomplete";
+import { ThemeToggle } from "./components/atoms/ThemeToggle";
+import { FileUpload } from "./components/atoms/FileUpload";
+import { Drawer } from "./components/atoms/Drawer";
+import { Image } from "./components/atoms/Image";
+import { Calendar } from "./components/atoms/Calendar";
+import { ActionButton } from "./components/atoms/ActionButton";
+import { PinInput } from "./components/atoms/PinInput";
+// import { Tabs } from "./components/atoms/Tabs"; // Using preview
+import { Save } from "@mui/icons-material";
 
 function AppContent() {
-  const { themeName, setTheme } = useTheme();
+  const themeName = getThemeName();
   const [checkboxState, setCheckboxState] = React.useState("default");
   const [inputState, setInputState] = React.useState<
     "default" | "filled" | "unstyled"
@@ -36,18 +50,14 @@ function AppContent() {
   const [pillState, setPillState] = React.useState<
     "default" | "info" | "success" | "warning" | "error"
   >("default");
-  const [cardState, setCardState] = React.useState<"default" | "image-overlay">(
-    "default"
-  );
+  // const [cardState, setCardState] = React.useState<"default" | "image-overlay">("default"); // Not used in showcase
   const [tagState, setTagState] = React.useState<
     "default" | "teal" | "selected" | "mint"
   >("default");
   const [avatarState, setAvatarState] = React.useState<
     "primary" | "secondary" | "success" | "warning"
   >("primary");
-  const [modalState, setModalState] = React.useState<
-    "default" | "large" | "small"
-  >("default");
+  // const [modalState, setModalState] = React.useState<"default" | "large" | "small">("default"); // Not used in showcase
   const [paginationState, setPaginationState] = React.useState<
     "xs" | "sm" | "md" | "lg" | "xl"
   >("md");
@@ -74,15 +84,40 @@ function AppContent() {
     "Demo",
   ]);
 
-  const [radioState, setRadioState] = React.useState<
-    "default" | "filled" | "outline" | "light"
-  >("default");
+  // const [radioState, setRadioState] = React.useState<"default" | "filled" | "outline" | "light">("default"); // Not used in showcase
   const [stepperState, setStepperState] = React.useState<
     "xs" | "sm" | "md" | "lg" | "xl"
   >("md");
   const [kbdState, setKbdState] = React.useState<"sm" | "md" | "lg" | "xl">(
     "md"
   );
+
+  // New component states
+  const [passwordInputState, setPasswordInputState] = React.useState<
+    "default" | "filled" | "unstyled"
+  >("default");
+  const [progressBarState, setProgressBarState] = React.useState<
+    "default" | "striped" | "animated"
+  >("default");
+  // const [accordionState, setAccordionState] = React.useState<"single" | "multiple">("single"); // Using preview
+  const [autocompleteState, setAutocompleteState] = React.useState<
+    "default" | "filled" | "unstyled"
+  >("default");
+  const [themeToggleState, setThemeToggleState] = React.useState<
+    "sm" | "md" | "lg"
+  >("md");
+  const [drawerState, setDrawerState] = React.useState<
+    "left" | "right" | "top" | "bottom"
+  >("left");
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [imageState, setImageState] = React.useState<
+    "cover" | "contain" | "fill"
+  >("cover");
+  const [actionButtonState, setActionButtonState] = React.useState<
+    "default" | "loading" | "success"
+  >("default");
+  // const [pinInputState, setPinInputState] = React.useState<"default" | "filled" | "outline">("default"); // Not used in showcase
+  // const [tabsState, setTabsState] = React.useState<"default" | "pills" | "outline">("default"); // Using preview
 
   const navItems = [
     {
@@ -138,7 +173,7 @@ function AppContent() {
       >
         <span style={{ fontSize: "14px", color: "#666" }}>Theme:</span>
         <button
-          onClick={() => setTheme("default-light")}
+          onClick={() => setTheme("light")}
           style={{
             padding: "8px 16px",
             borderRadius: "6px",
@@ -150,7 +185,7 @@ function AppContent() {
           ☀️ Light
         </button>
         <button
-          onClick={() => setTheme("default-dark")}
+          onClick={() => setTheme("dark")}
           style={{
             padding: "8px 16px",
             backgroundColor:
@@ -407,7 +442,7 @@ function AppContent() {
               variants={["default", "image-overlay"]}
               defaultVariant="default"
               onVariantChange={(variant) =>
-                setCardState(variant as "default" | "image-overlay")
+                console.log(`Card variant changed to: ${variant}`)
               }
             >
               <Card
@@ -466,7 +501,7 @@ function AppContent() {
               variants={["default", "large", "small"]}
               defaultVariant="default"
               onVariantChange={(variant) =>
-                setModalState(variant as "default" | "large" | "small")
+                console.log(`Modal variant changed to: ${variant}`)
               }
             >
               <div
@@ -555,9 +590,7 @@ function AppContent() {
               variants={["default", "filled", "outline", "light"]}
               defaultVariant="default"
               onVariantChange={(variant) =>
-                setRadioState(
-                  variant as "default" | "filled" | "outline" | "light"
-                )
+                console.log(`Radio variant changed to: ${variant}`)
               }
             >
               <div>
@@ -610,15 +643,395 @@ function AppContent() {
           </GridCol>
         </Grid>
       </div>
+
+      {/* Advanced Input Components */}
+      <div style={{ marginTop: "48px", padding: "0 16px" }}>
+        <Text variant="xxl" weight="bold" style={{ marginBottom: "24px" }}>
+          Advanced Input Components
+        </Text>
+        <Grid gutter="24px">
+          <GridCol span={4}>
+            <VariantSelector
+              title="PasswordInput Component"
+              variants={["default", "filled", "unstyled"]}
+              defaultVariant="default"
+              onVariantChange={(variant) =>
+                console.log(`PasswordInput variant changed to: ${variant}`)
+              }
+            >
+              <PasswordInput
+                label="Password"
+                placeholder="Enter your password..."
+                showStrengthMeter={true}
+                onChange={(value) => console.log("Password:", value)}
+              />
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={4}>
+            <VariantSelector
+              title="PinInput Component"
+              variants={["default", "filled", "outline"]}
+              defaultVariant="default"
+              onVariantChange={(variant) =>
+                console.log(`PinInput variant changed to: ${variant}`)
+              }
+            >
+              <PinInput
+                length={4}
+                mask={true}
+                size="md"
+                onChange={(value) => console.log("PIN:", value)}
+              />
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={4}>
+            <VariantSelector
+              title="Autocomplete Component"
+              variants={["default", "filled", "unstyled"]}
+              defaultVariant="default"
+              onVariantChange={(variant) =>
+                setAutocompleteState(
+                  variant as "default" | "filled" | "unstyled"
+                )
+              }
+            >
+              <Autocomplete
+                placeholder="Search frameworks..."
+                variant={autocompleteState}
+                options={[
+                  { value: "react", label: "React" },
+                  { value: "vue", label: "Vue" },
+                  { value: "angular", label: "Angular" },
+                  { value: "svelte", label: "Svelte" },
+                  { value: "nextjs", label: "Next.js" },
+                  { value: "nuxtjs", label: "Nuxt.js" },
+                ]}
+                onChange={(value) => console.log("Autocomplete:", value)}
+              />
+            </VariantSelector>
+          </GridCol>
+        </Grid>
+      </div>
+
+      {/* Interactive Components */}
+      <div style={{ marginTop: "48px", padding: "0 16px" }}>
+        <Text variant="xxl" weight="bold" style={{ marginBottom: "24px" }}>
+          Interactive Components
+        </Text>
+        <Grid gutter="24px">
+          <GridCol span={4}>
+            <VariantSelector
+              title="ProgressBar Component"
+              variants={["default", "striped", "animated"]}
+              defaultVariant="default"
+              onVariantChange={(variant) =>
+                setProgressBarState(
+                  variant as "default" | "striped" | "animated"
+                )
+              }
+            >
+              <div>
+                <Text variant="sm" style={{ marginBottom: "8px" }}>
+                  Progress: 65%
+                </Text>
+                <ProgressBar
+                  value={65}
+                  max={100}
+                  size="md"
+                  variant="default"
+                  animated={progressBarState === "animated"}
+                  showPercentage={true}
+                />
+              </div>
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={4}>
+            <VariantSelector
+              title="ActionButton Component"
+              variants={["default", "loading", "success"]}
+              defaultVariant="default"
+              onVariantChange={(variant) =>
+                setActionButtonState(
+                  variant as "default" | "loading" | "success"
+                )
+              }
+            >
+              <ActionButton
+                icon={Save}
+                variant="filled"
+                size="md"
+                disabled={actionButtonState === "loading"}
+                onClick={() => console.log("Action button clicked")}
+              />
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={4}>
+            <VariantSelector
+              title="ThemeToggle Component"
+              variants={["sm", "md", "lg"]}
+              defaultVariant="md"
+              onVariantChange={(variant) =>
+                setThemeToggleState(variant as "sm" | "md" | "lg")
+              }
+            >
+              <ThemeToggle
+                size={themeToggleState}
+                showLabel={true}
+                variant="outline"
+              />
+            </VariantSelector>
+          </GridCol>
+        </Grid>
+      </div>
+
+      {/* Content Organization */}
+      <div style={{ marginTop: "48px", padding: "0 16px" }}>
+        <Text variant="xxl" weight="bold" style={{ marginBottom: "24px" }}>
+          Content Organization
+        </Text>
+        <Grid gutter="24px">
+          <GridCol span={4}>
+            <VariantSelector
+              title="Accordion Component"
+              variants={["expanded", "collapsed"]}
+              defaultVariant="expanded"
+              onVariantChange={(variant) =>
+                console.log(`Accordion variant changed to: ${variant}`)
+              }
+            >
+              <div
+                style={{
+                  padding: "16px",
+                  border: "1px solid var(--color-border-secondary)",
+                  borderRadius: "var(--radius-md)",
+                  backgroundColor: "var(--color-surface)",
+                }}
+              >
+                <Text
+                  variant="md"
+                  weight="semibold"
+                  style={{ marginBottom: "8px" }}
+                >
+                  Accordion Preview
+                </Text>
+                <Text variant="sm" color="secondary">
+                  Click to expand/collapse content sections. Useful for FAQs and
+                  content organization.
+                </Text>
+              </div>
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={4}>
+            <VariantSelector
+              title="Tabs Component"
+              variants={["horizontal", "vertical"]}
+              defaultVariant="horizontal"
+              onVariantChange={(variant) =>
+                console.log(`Tabs variant changed to: ${variant}`)
+              }
+            >
+              <div
+                style={{
+                  padding: "16px",
+                  border: "1px solid var(--color-border-secondary)",
+                  borderRadius: "var(--radius-md)",
+                  backgroundColor: "var(--color-surface)",
+                }}
+              >
+                <Text
+                  variant="md"
+                  weight="semibold"
+                  style={{ marginBottom: "8px" }}
+                >
+                  Tabs Preview
+                </Text>
+                <Text variant="sm" color="secondary">
+                  Navigation between different content sections. Supports
+                  horizontal and vertical layouts.
+                </Text>
+              </div>
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={4}>
+            <VariantSelector
+              title="Image Component"
+              variants={["cover", "contain", "fill"]}
+              defaultVariant="cover"
+              onVariantChange={(variant) =>
+                setImageState(variant as "cover" | "contain" | "fill")
+              }
+            >
+              <Image
+                src="https://picsum.photos/300/200"
+                alt="Sample Image"
+                width="100%"
+                height="200px"
+                fit={imageState}
+                radius="md"
+                loading="lazy"
+              />
+            </VariantSelector>
+          </GridCol>
+        </Grid>
+      </div>
+
+      {/* Date & File Components */}
+      <div style={{ marginTop: "48px", padding: "0 16px" }}>
+        <Text variant="xxl" weight="bold" style={{ marginBottom: "24px" }}>
+          Date & File Components
+        </Text>
+        <Grid gutter="24px">
+          <GridCol span={4}>
+            <VariantSelector
+              title="DatePicker Component"
+              variants={["default", "range", "multiple"]}
+              defaultVariant="default"
+              onVariantChange={(variant) =>
+                console.log(`DatePicker variant changed to: ${variant}`)
+              }
+            >
+              <DatePicker
+                label="Select Date"
+                placeholder="Pick a date..."
+                onChange={(date) => console.log("Date selected:", date)}
+              />
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={4}>
+            <VariantSelector
+              title="Calendar Component"
+              variants={["default", "range", "multiple"]}
+              defaultVariant="default"
+              onVariantChange={(variant) =>
+                console.log(`Calendar variant changed to: ${variant}`)
+              }
+            >
+              <Calendar
+                size="md"
+                onDateSelect={(date) => console.log("Calendar date:", date)}
+              />
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={4}>
+            <VariantSelector
+              title="FileUpload Component"
+              variants={["default", "dropzone", "button"]}
+              defaultVariant="default"
+              onVariantChange={(variant) =>
+                console.log(`FileUpload variant changed to: ${variant}`)
+              }
+            >
+              <FileUpload
+                acceptedFileTypes={["pdf", "doc", "docx", "jpg", "png"]}
+                maxFileSize={5242880} // 5MB
+                multiple={true}
+                onUpload={(files) => console.log("Files selected:", files)}
+                uploadText="Drop files here or click to browse"
+              />
+            </VariantSelector>
+          </GridCol>
+        </Grid>
+      </div>
+
+      {/* Navigation Component */}
+      <div
+        style={{ marginTop: "48px", padding: "0 16px", marginBottom: "48px" }}
+      >
+        <Text variant="xxl" weight="bold" style={{ marginBottom: "24px" }}>
+          Navigation Component
+        </Text>
+        <Grid gutter="24px">
+          <GridCol span={6}>
+            <VariantSelector
+              title="Drawer Component"
+              variants={["left", "right", "top", "bottom"]}
+              defaultVariant="left"
+              onVariantChange={(variant) =>
+                setDrawerState(variant as "left" | "right" | "top" | "bottom")
+              }
+            >
+              <div>
+                <Button
+                  variant="outline"
+                  onClick={() => setDrawerOpen(true)}
+                  style={{ marginBottom: "16px" }}
+                >
+                  Open{" "}
+                  {drawerState.charAt(0).toUpperCase() + drawerState.slice(1)}{" "}
+                  Drawer
+                </Button>
+                <Drawer
+                  show={drawerOpen}
+                  onClose={() => setDrawerOpen(false)}
+                  direction={drawerState}
+                  title="Sample Drawer"
+                >
+                  <div style={{ padding: "16px" }}>
+                    <Text variant="md" style={{ marginBottom: "16px" }}>
+                      This is a sample drawer content.
+                    </Text>
+                    <Text variant="sm" color="secondary">
+                      You can put any content here including forms, navigation,
+                      or other components.
+                    </Text>
+                    <Button
+                      variant="filled"
+                      size="sm"
+                      onClick={() => setDrawerOpen(false)}
+                      style={{ marginTop: "16px" }}
+                    >
+                      Close Drawer
+                    </Button>
+                  </div>
+                </Drawer>
+              </div>
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={6}>
+            <div
+              style={{
+                padding: "24px",
+                border: "1px solid var(--color-border-secondary)",
+                borderRadius: "var(--radius-lg)",
+                backgroundColor: "var(--color-surface)",
+                textAlign: "center",
+              }}
+            >
+              <Text
+                variant="lg"
+                weight="semibold"
+                style={{ marginBottom: "8px" }}
+              >
+                🎉 Component Showcase Complete!
+              </Text>
+              <Text
+                variant="md"
+                color="secondary"
+                style={{ marginBottom: "16px" }}
+              >
+                You now have{" "}
+                <Text as="span" weight="semibold" color="primary">
+                  15+
+                </Text>{" "}
+                components showcased in your UI
+              </Text>
+              <Text variant="sm" color="secondary">
+                Each component includes interactive variant selectors and
+                follows your design system tokens.
+              </Text>
+            </div>
+          </GridCol>
+        </Grid>
+      </div>
     </div>
   );
 }
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="default-light">
+    <SimpleThemeProvider defaultTheme="light">
       <AppContent />
-    </ThemeProvider>
+    </SimpleThemeProvider>
   );
 }
 

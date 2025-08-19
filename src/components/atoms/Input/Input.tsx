@@ -18,7 +18,7 @@ import styles from "./Input.module.scss";
 import type { SxProps } from "../../../styles/stylesApi";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
-import { useTheme } from "../../../contexts/ThemeContext";
+import { isDark } from '../../../utils/themeUtils';
 
 export interface InputProps extends WithSxProps {
   /** Input value */
@@ -98,7 +98,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     },
     ref
   ) => {
-    const { isDark } = useTheme();
+    
     // Internal state for password visibility
     const [internalPasswordVisible, setInternalPasswordVisible] =
       React.useState(false);
@@ -222,7 +222,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           onKeyDown={onKeyDown}
           className={inputClasses}
           style={sxStyle}
-          data-theme={isDark ? "dark" : "light"}
+          data-theme={isDark() ? "dark" : "light"}
         />
 
         {/* Left Icon */}

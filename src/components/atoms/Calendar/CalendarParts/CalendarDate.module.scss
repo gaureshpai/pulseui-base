@@ -38,7 +38,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background-color: var(--color-blue-6);
+  background-color: var(--color-primary);
   z-index: 2;
 }
 
@@ -314,5 +314,62 @@
 
   &.disabled.in-range {
     color: var(--color-text-muted) !important;
+  }
+}
+
+// Dark theme support
+[data-theme="dark"] {
+  .calendarDate {
+    color: var(--color-text-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-surface-secondary);
+    }
+
+    &:focus-visible {
+      outline-color: var(--color-border-focus);
+    }
+  }
+
+  .dateItem {
+    color: var(--color-text-primary);
+
+    &.disabled {
+      color: var(--color-text-secondary);
+    }
+
+    &:hover:not(.disabled) {
+      background-color: var(--color-surface-secondary);
+    }
+
+    &.today {
+      color: var(--color-text-primary);
+    }
+
+    &.selected {
+      background-color: var(--color-surface-secondary);
+    }
+
+    &.in-range {
+      background-color: var(--color-surface-secondary);
+    }
+  }
+
+  .indicator {
+    background-color: var(--color-primary);
+  }
+
+  .weekend {
+    color: var(--color-red-6) !important;
+
+    &.active-initial,
+    &.active-end,
+    &.active-selected {
+      color: var(--color-text-primary) !important;
+    }
+
+    &.active-passive {
+      color: var(--color-primary) !important;
+    }
   }
 }

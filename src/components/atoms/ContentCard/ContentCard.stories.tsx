@@ -78,7 +78,7 @@ const sampleData = {
 export const Default: Story = {
   args: {
     ...sampleData,
-    size: "md",
+    size: "sm",
   },
 };
 

@@ -13,7 +13,8 @@ import {
   useAnimation,
   useStaggerAnimation,
 } from "../components/Animation";
-import { ThemeProvider, useTheme } from "../components/ThemeProvider";
+import { SimpleThemeProvider } from "../components/SimpleThemeProvider";
+import { getThemeName, setTheme } from "../utils/themeUtils";
 import { ErrorBoundary } from "../utils/errorBoundary";
 import {
   usePerformanceMonitor,
@@ -22,28 +23,11 @@ import {
 
 // Example of advanced theming
 const CustomThemeExample: React.FC = () => {
-  const { currentTheme, setTheme, addCustomTheme } = useTheme();
+  const currentTheme = getThemeName();
 
-  const handleAddCustomTheme = () => {
-    addCustomTheme("custom", {
-      description: "Custom theme with custom colors",
-      mode: {
-        light: {
-          primary: { type: "color", value: "#6366f1" },
-          secondary: { type: "color", value: "#f59e0b" },
-          accent: { type: "color", value: "#10b981" },
-          background: { type: "color", value: "#ffffff" },
-          text: { type: "color", value: "#1f2937" },
-        },
-        dark: {
-          primary: { type: "color", value: "#818cf8" },
-          secondary: { type: "color", value: "#fbbf24" },
-          accent: { type: "color", value: "#34d399" },
-          background: { type: "color", value: "#111827" },
-          text: { type: "color", value: "#f9fafb" },
-        },
-      },
-    });
+  const handleToggleTheme = () => {
+    const newTheme = currentTheme === "default-light" ? "dark" : "light";
+    setTheme(newTheme);
   };
 
   return (
@@ -52,15 +36,12 @@ const CustomThemeExample: React.FC = () => {
         <Text variant="h3">Advanced Theming</Text>
         <Text variant="sm">Current theme: {currentTheme}</Text>
 
-        <Grid cols={3} gap="sm">
-          <Button variant="primary" onClick={() => setTheme("default")}>
-            Default Theme
+        <Grid cols={2} gap="sm">
+          <Button variant="primary" onClick={() => setTheme("light")}>
+            Light Theme
           </Button>
-          <Button variant="primary" onClick={() => setTheme("medash")}>
-            MedTech Theme
-          </Button>
-          <Button variant="primary" onClick={handleAddCustomTheme}>
-            Add Custom Theme
+          <Button variant="primary" onClick={() => setTheme("dark")}>
+            Dark Theme
           </Button>
         </Grid>
       </Stack>
@@ -266,7 +247,7 @@ const PerformanceExample: React.FC = () => {
 // Main example component
 export const AdvancedFeaturesExample: React.FC = () => {
   return (
-    <ThemeProvider>
+    <SimpleThemeProvider>
       <Container>
         <Stack gap="xl">
           <Text variant="h1">PulseUI Advanced Features</Text>
@@ -277,6 +258,6 @@ export const AdvancedFeaturesExample: React.FC = () => {
           <PerformanceExample />
         </Stack>
       </Container>
-    </ThemeProvider>
+    </SimpleThemeProvider>
   );
 };

@@ -2,14 +2,14 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { userEvent, within, expect } from "@storybook/test";
 import { Card } from "./Card";
-import { ThemeProvider } from "../../ThemeProvider/ThemeProvider";
+import { SimpleThemeProvider } from "../../SimpleThemeProvider/SimpleThemeProvider";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
-import { useTheme } from "../../../contexts/ThemeContext";
+import { isDark } from "../../../utils/themeUtils";
 
 // Theme-aware wrapper component
 const ThemeWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <ThemeProvider defaultTheme="default-light">
+    <SimpleThemeProvider defaultTheme="light">
       <div
         style={{
           padding: "2rem",
@@ -53,7 +53,7 @@ const ThemeWrapper = ({ children }: { children: React.ReactNode }) => {
         </div>
         {children}
       </div>
-    </ThemeProvider>
+    </SimpleThemeProvider>
   );
 };
 
@@ -525,7 +525,7 @@ export const WithCustomContent: Story = {
 export const ThemeShowcase: Story = {
   render: () => {
     const ThemeAwareCard = () => {
-      const { isDark, themeMode } = useTheme();
+      const currentTheme = isDark() ? "dark" : "light";
 
       return (
         <div
@@ -550,8 +550,8 @@ export const ThemeShowcase: Story = {
               marginBottom: "2rem",
             }}
           >
-            Current theme: <strong>{themeMode}</strong> (
-            {isDark ? "Dark" : "Light"})
+            Current theme: <strong>{currentTheme}</strong> (
+            {isDark() ? "Dark" : "Light"})
           </p>
 
           <div style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
@@ -620,5 +620,88 @@ export const ThemeShowcase: Story = {
     };
 
     return <ThemeAwareCard />;
+  },
+};
+
+export const SizingExamples: Story = {
+  render: () => (
+    <div
+      style={{
+        display: "grid",
+        gap: "2rem",
+        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+      }}
+    >
+      {/* Default Card - No size specified */}
+      <Card
+        title="Default Size Card"
+        description="This card uses the default sizing from CSS"
+        buttonText="Default Button"
+        imageSrc="https://picsum.photos/400/200"
+        showImage={true}
+      />
+
+      {/* Small Card - Using sx prop */}
+      <Card
+        title="Small Card (300px width)"
+        description="This card is constrained to 300px width using sx prop"
+        buttonText="Small Button"
+        imageSrc="https://picsum.photos/400/200"
+        showImage={true}
+        sx={{ width: 300 }}
+      />
+
+      {/* Medium Card - Using sx prop */}
+      <Card
+        title="Medium Card (400px width)"
+        description="This card is set to 400px width using sx prop"
+        buttonText="Medium Button"
+        imageSrc="https://picsum.photos/400/200"
+        showImage={true}
+        sx={{ width: 400 }}
+      />
+
+      {/* Large Card - Using sx prop */}
+      <Card
+        title="Large Card (500px width)"
+        description="This card is set to 500px width using sx prop"
+        buttonText="Large Button"
+        imageSrc="https://picsum.photos/400/200"
+        showImage={true}
+        sx={{ width: 500 }}
+      />
+
+      {/* Custom Height Card */}
+      <Card
+        title="Custom Height Card"
+        description="This card has custom height using sx prop"
+        buttonText="Custom Button"
+        imageSrc="https://picsum.photos/400/200"
+        showImage={true}
+        sx={{ height: 400, width: 350 }}
+      />
+
+      {/* Responsive Card */}
+      <Card
+        title="Responsive Card"
+        description="This card uses responsive sizing with min/max width"
+        buttonText="Responsive Button"
+        imageSrc="https://picsum.photos/400/200"
+        showImage={true}
+        sx={{
+          minWidth: 250,
+          maxWidth: 450,
+          width: "100%",
+        }}
+      />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates how to use the sx prop to control Card component sizing. The sx prop allows you to override the default CSS sizing with custom dimensions.",
+      },
+    },
   },
 };

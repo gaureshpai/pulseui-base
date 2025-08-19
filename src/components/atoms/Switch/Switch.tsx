@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import styles from "./Switch.module.scss";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
-import { useTheme } from "../../../contexts/ThemeContext";
+import { isDark } from '../../../utils/themeUtils';
 
 export interface SwitchProps extends WithSxProps {
   id?: string;
@@ -40,7 +40,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
     },
     ref
   ) => {
-    const { isDark } = useTheme();
+    
     const [internalChecked, setInternalChecked] = React.useState(
       defaultChecked || false
     );
@@ -87,7 +87,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
             className={styles.switchInput}
             aria-describedby={errorId}
             aria-invalid={!!error}
-            data-theme={isDark ? "dark" : "light"}
+            data-theme={isDark() ? "dark" : "light"}
           />
 
           <div

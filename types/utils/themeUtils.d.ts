@@ -1,0 +1,10 @@
+export type ThemeMode = "light" | "dark";
+export type ThemeName = "default-light" | "default-dark";
+export declare const getCurrentTheme: () => ThemeMode;
+export declare const isDark: () => boolean;
+export declare const isLight: () => boolean;
+export declare const setTheme: (theme: ThemeMode) => void;
+export declare const toggleTheme: () => void;
+export declare const initializeTheme: (defaultTheme?: ThemeMode) => void;
+export declare const getThemeName: () => ThemeName;
+export declare const getThemeMode: () => ThemeMode;

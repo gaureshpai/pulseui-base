@@ -114,7 +114,7 @@ export declare const getTypographyValue: (variant: TypographyVariant, theme: The
 };
 export declare const getBorderRadiusValue: (radius: BorderRadius, theme: Theme) => string;
 export declare const getShadowValue: (shadow: Shadow, theme: Theme) => string;
-export declare const processSxProps: (sx: SxProps, theme?: Theme) => CSSProperties;
+export declare const processSxProps: (sx: SxProps) => CSSProperties;
 export declare const styled: (component: string | React.ComponentType<any>, defaultSx?: SxProps) => React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
 export declare const Box: React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;
 export declare const Typography: React.ForwardRefExoticComponent<Omit<any, "ref"> & React.RefAttributes<any>>;

@@ -22,7 +22,7 @@ import type { SvgIconComponent } from "@mui/icons-material";
 import type { SxProps } from "../../../styles/stylesApi";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
-import { useTheme } from "../../../contexts/ThemeContext";
+import { isDark } from '../../../utils/themeUtils';
 
 export interface BadgeProps extends WithSxProps {
   /** Badge text content */
@@ -63,7 +63,7 @@ export const Badge: React.FC<BadgeProps> = ({
   sx,
   style,
 }) => {
-  const { isDark } = useTheme();
+  
   const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
     sx,
     style,
@@ -175,7 +175,7 @@ export const Badge: React.FC<BadgeProps> = ({
       disabled={disabled || state === "disabled"}
       style={sxStyle}
       type={onClick ? "button" : undefined}
-      data-theme={isDark ? "dark" : "light"}
+      data-theme={isDark() ? "dark" : "light"}
     >
       {variant === "dot" && <span className={styles.dot} />}
       {leftIconComponent && (

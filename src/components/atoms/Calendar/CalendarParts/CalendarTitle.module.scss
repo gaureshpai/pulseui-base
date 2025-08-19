@@ -45,7 +45,7 @@
   &.today {
     border-color: var(--color-border-primary);
     background-color: var(--color-surface-secondary);
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
   }
 }
 
@@ -206,6 +206,90 @@
       background-color: var(--color-gray-1);
       color: var(--color-gray-5);
       cursor: not-allowed;
+    }
+  }
+}
+
+// Dark theme support
+[data-theme="dark"] {
+  .calendarTitle {
+    color: var(--color-text-primary);
+
+    &:hover:not(.disabled) {
+      .title {
+        color: var(--color-text-primary);
+      }
+
+      .subtitle {
+        color: var(--color-text-secondary);
+      }
+    }
+
+    &.today {
+      border-color: var(--color-border-primary);
+      background-color: var(--color-surface-secondary);
+      color: var(--color-text-primary);
+    }
+
+    &:focus-visible {
+      outline-color: var(--color-border-focus);
+    }
+  }
+
+  .type-titles {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-surface-secondary);
+    }
+  }
+
+  .type-day {
+    color: var(--color-text-muted);
+
+    &:hover:not(:disabled) {
+      color: var(--color-text-primary);
+    }
+  }
+
+  .state-hover {
+    &.type-titles:hover:not(:disabled) {
+      background-color: var(--color-surface-secondary);
+    }
+
+    &.type-day:hover:not(:disabled) {
+      color: var(--color-text-primary);
+    }
+  }
+
+  .stateDisabled {
+    &.type-titles {
+      background-color: var(--color-surface-secondary);
+      color: var(--color-text-secondary);
+    }
+
+    &.type-day {
+      color: var(--color-text-muted);
+    }
+  }
+
+  .editable {
+    &.type-day {
+      background-color: var(--color-surface);
+      color: var(--color-text-primary);
+      border-color: var(--color-border-focus);
+
+      &:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 2px var(--color-primary);
+      }
+
+      &:disabled {
+        border-color: var(--color-border-secondary);
+        background-color: var(--color-surface-secondary);
+        color: var(--color-text-muted);
+      }
     }
   }
 }

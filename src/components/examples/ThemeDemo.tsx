@@ -4,11 +4,11 @@ import { Button } from "../atoms/Button";
 import { Input } from "../atoms/Input";
 import { Badge } from "../atoms/Badge";
 import { ThemeToggle } from "../atoms/ThemeToggle";
-import { useTheme } from "../../contexts/ThemeContext";
+import { isDark } from '../../utils/themeUtils';
 import { Grid } from "../layouts/Grid";
 
 export const ThemeDemo: React.FC = () => {
-  const { themeMode, themeName, isDark, isLight } = useTheme();
+  const { themeMode, themeName, isDark(), isLight } = useTheme();
 
   return (
     <div style={{ padding: "2rem", maxWidth: "1200px", margin: "0 auto" }}>
@@ -50,10 +50,10 @@ export const ThemeDemo: React.FC = () => {
           <ThemeToggle showLabel={true} size="lg" variant="outline" />
 
           <Badge
-            variant={isDark ? "primary" : "secondary"}
+            variant={isDark() ? "primary" : "secondary"}
             sx={{ fontSize: "md" }}
           >
-            {isDark ? "🌙 Dark" : "☀️ Light"}
+            {isDark() ? "🌙 Dark" : "☀️ Light"}
           </Badge>
         </div>
       </div>
@@ -284,7 +284,7 @@ export const ThemeDemo: React.FC = () => {
             >
               <li>Theme Name: {themeName}</li>
               <li>Theme Mode: {themeMode}</li>
-              <li>Is Dark: {isDark ? "Yes" : "No"}</li>
+              <li>Is Dark: {isDark() ? "Yes" : "No"}</li>
               <li>Is Light: {isLight ? "Yes" : "No"}</li>
             </ul>
           </div>

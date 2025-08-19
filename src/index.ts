@@ -215,8 +215,8 @@ export { Icon } from "./components/atoms/Icon/Icon";
 export type { IconProps } from "./components/atoms/Icon/Icon";
 
 // Theme Provider
-export { ThemeProvider, useTheme } from "./components/ThemeProvider";
-export type { ThemeProviderProps } from "./components/ThemeProvider";
+export { SimpleThemeProvider } from "./components/SimpleThemeProvider";
+export type { SimpleThemeProviderProps } from "./components/SimpleThemeProvider";
 
 // Utilities
 export { mergeSxWithStyles, combineClassNames } from "./utils/sxUtils";

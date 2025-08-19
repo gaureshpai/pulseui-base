@@ -43,7 +43,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "npm run generate-themes && npm run build:lib && npm run build:styles && npm run build:types",
+    "build": "npm run build:lib && npm run build:styles && npm run build:types",
     "build:lib": "vite build --config vite.lib.config.ts",
     "build:types": "tsc --project tsconfig.build.json",
     "build:styles": "sass src/styles/_tokens.scss:dist/tokens.css --style compressed && sass src/styles/pulseui-base.scss:dist/pulseui-base.scss.css --style compressed",
@@ -53,8 +53,7 @@
     "build-storybook": "storybook build",
     "preview": "vite preview",
     "pack:preview": "npm pack --dry-run",
-    "pack:check": "npm pack && tar -tf *.tgz",
-    "generate-themes": "node scripts/generate-themes.js"
+    "pack:check": "npm pack && tar -tf *.tgz"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0",

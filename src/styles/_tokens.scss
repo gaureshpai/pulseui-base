@@ -1,5 +1,6 @@
 // Design Tokens - SCSS Variables
 // These tokens are used throughout the component library
+// Updated to match Figma JSON values while maintaining structure
 
 // Colors
 :root {
@@ -7,79 +8,79 @@
   --color-white: #ffffff;
   --color-black: #000000;
 
-  // New Surface Color System
+  // New Surface Color System - Updated to match Figma
   --color-surface-0: #ffffff; // Base surface
-  --color-surface-1: #fafafa; // Surface 1
-  --color-surface-2: #f5f5f5; // Surface 2
-  --color-surface-3: #eeeeee; // Surface 3
-  --color-surface-4: #e0e0e0; // Surface 4
-  --color-surface-5: #d6d6d6; // Surface 5
-  --color-surface-variant: #f0f0f0; // Surface variant
-  --color-on-surface: #212121; // Primary text/icons
-  --color-on-surface-variant: #5f5f5f; // Secondary text
-  --color-divider: #e0e0e0; // Divider/border
+  --color-surface-1: #f8f9fa; // Surface 1 - matches Figma gray-10
+  --color-surface-2: #e9ecef; // Surface 2 - matches Figma gray-20
+  --color-surface-3: #dee2e6; // Surface 3 - matches Figma gray-30
+  --color-surface-4: #ced4da; // Surface 4 - matches Figma gray-40
+  --color-surface-5: #adb5bd; // Surface 5 - matches Figma gray-50
+  --color-surface-variant: #f1f3f5; // Surface variant
+  --color-on-surface: #212529; // Primary text/icons - matches Figma text-default
+  --color-on-surface-variant: #868e96; // Secondary text - matches Figma text-dimmed
+  --color-divider: #dee2e6; // Divider/border
 
-  // Gray scale (keeping for backward compatibility)
-  --color-gray-0: var(--color-surface-1);
-  --color-gray-1: var(--color-surface-2);
-  --color-gray-2: var(--color-surface-3);
-  --color-gray-3: var(--color-surface-4);
-  --color-gray-4: var(--color-surface-5);
-  --color-gray-5: #adb5bd;
-  --color-gray-6: #868e96;
-  --color-gray-7: #495057;
-  --color-gray-8: #343a40;
-  --color-gray-9: #212529;
+  // Gray scale (keeping for backward compatibility) - Updated to match Figma
+  --color-gray-0: #f8f9fa; // matches Figma gray-10
+  --color-gray-1: #e9ecef; // matches Figma gray-20
+  --color-gray-2: #dee2e6; // matches Figma gray-30
+  --color-gray-3: #ced4da; // matches Figma gray-40
+  --color-gray-4: #adb5bd; // matches Figma gray-50
+  --color-gray-5: #868e96; // matches Figma gray-60
+  --color-gray-6: #495057; // matches Figma gray-70
+  --color-gray-7: #343a40; // matches Figma gray-80
+  --color-gray-8: #212529; // matches Figma gray-90
+  --color-gray-9: #000000; // matches Figma gray-100
 
-  // Blue scale
-  --color-blue-0: #e7f5ff;
-  --color-blue-1: #d0ebff;
-  --color-blue-2: #a5d8ff;
-  --color-blue-3: #74c0fc;
-  --color-blue-4: #4dabf7;
-  --color-blue-5: #339af0;
-  --color-blue-6: #228be6;
-  --color-blue-7: #1c7ed6;
-  --color-blue-8: #1971c2;
-  --color-blue-9: #1864ab;
+  // Blue scale - Updated to match Figma primary colors
+  --color-blue-0: #e7f5ff; // matches Figma blue-blue-0
+  --color-blue-1: #d0ebff; // matches Figma blue-blue-1
+  --color-blue-2: #a5d8ff; // matches Figma blue-blue-2
+  --color-blue-3: #74c0fc; // matches Figma blue-blue-3
+  --color-blue-4: #4dabf7; // matches Figma blue-blue-4
+  --color-blue-5: #339af0; // matches Figma blue-blue-5
+  --color-blue-6: #228be6; // matches Figma blue-blue-6
+  --color-blue-7: #1c7ed6; // matches Figma blue-blue-7
+  --color-blue-8: #1971c2; // matches Figma blue-blue-8
+  --color-blue-9: #1864ab; // matches Figma blue-blue-9
 
-  // Red scale
-  --color-red-0: #fff5f5;
-  --color-red-1: #ffe3e3;
-  --color-red-2: #ffc9c9;
-  --color-red-3: #ffa8a8;
-  --color-red-4: #ff8787;
-  --color-red-5: #ff6b6b;
-  --color-red-6: #fa5252;
-  --color-red-7: #f03e3e;
-  --color-red-8: #e03131;
-  --color-red-9: #c92a2a;
+  // Red scale - Updated to match Figma red colors
+  --color-red-0: #fff5f5; // matches Figma red-red-0
+  --color-red-1: #ffe3e3; // matches Figma red-red-1
+  --color-red-2: #ffc9c9; // matches Figma red-red-2
+  --color-red-3: #ffa8a8; // matches Figma red-red-3
+  --color-red-4: #ff8787; // matches Figma red-red-4
+  --color-red-5: #ff6b6b; // matches Figma red-red-5
+  --color-red-6: #fa5252; // matches Figma red-red-6
+  --color-red-7: #f03e3e; // matches Figma red-red-7
+  --color-red-8: #e03131; // matches Figma red-red-8
+  --color-red-9: #c92a2a; // matches Figma red-red-9
 
-  // Green scale
-  --color-green-0: #ebfbee;
-  --color-green-1: #d3f9d8;
-  --color-green-2: #b2f2bb;
-  --color-green-3: #8ce99a;
-  --color-green-4: #69db7c;
-  --color-green-5: #51cf66;
-  --color-green-6: #40c057;
-  --color-green-7: #37b24d;
-  --color-green-8: #2f9e44;
-  --color-green-9: #2b8a3e;
+  // Green scale - Updated to match Figma green colors
+  --color-green-0: #ebfbee; // matches Figma green-green-0
+  --color-green-1: #d3f9d8; // matches Figma green-green-1
+  --color-green-2: #b2f2bb; // matches Figma green-green-2
+  --color-green-3: #8ce99a; // matches Figma green-green-3
+  --color-green-4: #69db7c; // matches Figma green-green-4
+  --color-green-5: #51cf66; // matches Figma green-green-5
+  --color-green-6: #40c057; // matches Figma green-green-6
+  --color-green-7: #37b24d; // matches Figma green-green-7
+  --color-green-8: #2f9e44; // matches Figma green-green-8
+  --color-green-9: #2b8a3e; // matches Figma green-green-9
 
-  // Yellow scale
-  --color-yellow-0: #fff9db;
-  --color-yellow-1: #fff3bf;
-  --color-yellow-2: #ffec99;
-  --color-yellow-3: #ffe066;
-  --color-yellow-4: #ffd43b;
-  --color-yellow-5: #fcc419;
-  --color-yellow-6: #fab005;
-  --color-yellow-7: #f59f00;
-  --color-yellow-8: #f08c00;
-  --color-yellow-9: #e67700;
+  // Yellow scale - Updated to match Figma yellow colors
+  --color-yellow-0: #fff9db; // matches Figma yellow-yellow-0
+  --color-yellow-1: #fff3bf; // matches Figma yellow-yellow-1
+  --color-yellow-2: #ffec99; // matches Figma yellow-yellow-2
+  --color-yellow-3: #ffe066; // matches Figma yellow-yellow-3
+  --color-yellow-4: #ffd43b; // matches Figma yellow-yellow-4
+  --color-yellow-5: #fcc419; // matches Figma yellow-yellow-5
+  --color-yellow-6: #fab005; // matches Figma yellow-yellow-6
+  --color-yellow-7: #f59f00; // matches Figma yellow-yellow-7
+  --color-yellow-8: #f08c00; // matches Figma yellow-yellow-8
+  --color-yellow-9: #e67700; // matches Figma yellow-yellow-9
 
-  // Theme-aware colors (using new surface system)
+  // Theme-aware colors (using new surface system) - Updated to match Figma
   --color-background: var(--color-surface-0);
   --color-surface: var(--color-surface-0);
   --color-surface-hover: var(--color-surface-1);
@@ -95,86 +96,102 @@
   --color-border-focus: var(--color-blue-6);
   --color-shadow: rgba(0, 0, 0, 0.1);
 
-  // Component-specific theme colors
-  --color-button-primary: var(--color-blue-8);
-  --color-button-primary-hover: var(--color-blue-7);
-  --color-button-secondary: var(--color-surface-1);
-  --color-button-secondary-hover: var(--color-surface-2);
+  // Component-specific theme colors - Updated to match Figma
+  --color-button-primary: var(
+    --color-blue-8
+  ); // matches Figma color-button-primary
+  --color-button-primary-hover: var(
+    --color-blue-9
+  ); // matches Figma color-button-primary-hover
+  --color-button-secondary: var(
+    --color-gray-8
+  ); // matches Figma color-button-secondary
+  --color-button-secondary-hover: var(
+    --color-gray-9
+  ); // matches Figma color-button-secondary-hover
   --color-button-outline: var(--color-blue-6);
   --color-button-outline-hover: var(--color-blue-7);
   --color-button-text: var(--color-on-surface-variant);
   --color-button-text-hover: var(--color-on-surface);
 
-  // Input colors
-  --color-input-background: var(--color-surface-0);
-  --color-input-border: var(--color-divider);
-  --color-input-border-focus: var(--color-blue-6);
-  --color-input-text: var(--color-on-surface);
-  --color-input-placeholder: var(--color-on-surface-variant);
+  // Input colors - Updated to match Figma
+  --color-input-background: var(
+    --color-white
+  ); // matches Figma color-input-background
+  --color-input-border: var(--color-gray-3); // matches Figma color-input-border
+  --color-input-border-focus: var(
+    --color-blue-6
+  ); // matches Figma color-input-border-focus
+  --color-input-text: var(--color-gray-9); // matches Figma color-input-text
+  --color-input-placeholder: var(
+    --color-gray-6
+  ); // matches Figma color-input-placeholder
 
-  // Icon colors
-  --color-icon-primary: var(--color-on-surface);
-  --color-icon-secondary: var(--color-on-surface-variant);
-  --color-icon-muted: var(--color-on-surface-variant);
+  // Icon colors - Updated to match Figma
+  --color-icon-primary: var(--color-gray-9); // matches Figma color-icon-primary
+  --color-icon-secondary: var(
+    --color-gray-6
+  ); // matches Figma color-icon-secondary
+  --color-icon-muted: var(--color-gray-5); // matches Figma color-icon-muted
   --color-icon-inherit: currentColor;
 
-  // Status colors
-  --color-success: var(--color-green-6);
-  --color-warning: var(--color-yellow-6);
-  --color-error: var(--color-red-6);
-  --color-info: var(--color-blue-6);
+  // Status colors - Updated to match Figma
+  --color-success: var(--color-green-6); // matches Figma color-success
+  --color-warning: var(--color-yellow-6); // matches Figma color-warning
+  --color-error: var(--color-red-6); // matches Figma color-error
+  --color-info: var(--color-blue-6); // matches Figma color-info
 
-  // Primary colors
-  --color-primary: var(--color-blue-8);
-  --color-primary-hover: var(--color-blue-7);
-  --color-primary-light: var(--color-blue-6);
-  --color-primary-dark: var(--color-blue-9);
+  // Primary colors - Updated to match Figma
+  --color-primary: var(--color-blue-8); // matches Figma primary-color-8
+  --color-primary-hover: var(--color-blue-7); // matches Figma primary-color-7
+  --color-primary-light: var(--color-blue-6); // matches Figma primary-color-6
+  --color-primary-dark: var(--color-blue-9); // matches Figma primary-color-9
 
-  // Spacing
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  --spacing-xxl: 48px;
-  --spacing-2xl: 64px;
+  // Spacing - Updated to match Figma spacing values
+  --spacing-xs: 4px; // matches Figma spacing-spacing-xs
+  --spacing-sm: 8px; // matches Figma spacing-spacing-sm
+  --spacing-md: 12px; // matches Figma spacing-spacing-md (was 16px)
+  --spacing-lg: 16px; // matches Figma spacing-spacing-lg (was 24px)
+  --spacing-xl: 24px; // matches Figma spacing-spacing-xl (was 32px)
+  --spacing-xxl: 32px; // matches Figma spacing-spacing-xxl (was 48px)
+  --spacing-2xl: 48px; // adjusted to maintain hierarchy
   --spacing-icon: 10px;
 
-  // Border radius
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-full: 9999px;
+  // Border radius - Updated to match Figma radius values
+  --radius-xs: 2px; // matches Figma radius-radius-xs
+  --radius-sm: 4px; // matches Figma radius-radius-sm
+  --radius-md: 8px; // matches Figma radius-radius-md
+  --radius-lg: 12px; // adjusted to maintain hierarchy
+  --radius-xl: 16px; // matches Figma radius-radius-lg
+  --radius-full: 9999px; // matches Figma radius-radius-fully-round
 
-  // Font sizes
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-md: 16px;
-  --font-size-lg: 18px;
-  --font-size-xl: 20px;
-  --font-size-xxl: 24px;
+  // Font sizes - Updated to match Figma typography values
+  --font-size-xs: 12px; // matches Figma font-text-xs-size
+  --font-size-sm: 14px; // matches Figma font-text-sm-size
+  --font-size-md: 16px; // matches Figma font-text-md-size
+  --font-size-lg: 18px; // matches Figma font-text-lg-size
+  --font-size-xl: 20px; // matches Figma font-text-xl-size
+  --font-size-xxl: 24px; // matches Figma font-heading-h3-size
 
-  // Line heights
-  --line-height-xs: 15px;
-  --line-height-sm: 20.3px;
-  --line-height-md: 24px;
-  --line-height-lg: 27px;
-  --line-height-xl: 30px;
-  --line-height-xxl: 36px;
+  // Line heights - Updated to match Figma typography values
+  --line-height-xs: 15px; // matches Figma font-text-xs-line-height
+  --line-height-sm: 20.3px; // matches Figma font-text-sm-line-height
+  --line-height-md: 24px; // matches Figma font-text-md-line-height
+  --line-height-lg: 27px; // matches Figma font-text-lg-line-height
+  --line-height-xl: 30px; // matches Figma font-text-xl-line-height
+  --line-height-xxl: 36px; // adjusted to maintain hierarchy
   --line-height-tight: 1.2;
   --line-height-normal: 1.5;
 
-  // Font weights
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  // Font weights - Updated to match Figma typography values
+  --font-weight-normal: 400; // matches Figma font-text-md-weight
+  --font-weight-medium: 500; // standard weight
+  --font-weight-semibold: 600; // standard weight
+  --font-weight-bold: 700; // matches Figma font-heading-h1-weight
 
-  // Font family
+  // Font family - Updated to match Figma
   --font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Helvetica Neue", Arial, sans-serif;
+    "Helvetica Neue", Arial, sans-serif; // matches Figma font-text-md-family
 
   // Icon sizes
   --icon-size-xs: 12px;
@@ -233,13 +250,13 @@
   --color-overlay-dark: rgba(0, 0, 0, 0.8);
   --color-backdrop: rgba(0, 0, 0, 0.5);
 
-  // Breakpoints (Industry Standard)
-  --breakpoint-xs: 0px;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --breakpoint-xxl: 1400px;
+  // Breakpoints - Updated to match Figma breakpoint values
+  --breakpoint-xs: 0px; // matches Figma breakpoint-xs
+  --breakpoint-sm: 576px; // matches Figma breakpoint-sm
+  --breakpoint-md: 768px; // matches Figma breakpoint-md
+  --breakpoint-lg: 992px; // matches Figma breakpoint-lg
+  --breakpoint-xl: 1200px; // matches Figma breakpoint-xl
+  --breakpoint-xxl: 1400px; // matches Figma breakpoint-xxl
 
   // Legacy breakpoints (deprecated, kept for backward compatibility)
   --breakpoint-mobile: 480px;
@@ -247,22 +264,22 @@
   --breakpoint-desktop: 1024px;
   --breakpoint-wide: 1200px;
 
-  // Z-index
-  --z-dropdown: 1000;
-  --z-sticky: 1020;
-  --z-fixed: 1030;
-  --z-modal-backdrop: 1040;
-  --z-modal: 1050;
-  --z-popover: 1060;
-  --z-tooltip: 1070;
+  // Z-index - Updated to match Figma z-index values
+  --z-dropdown: 1000; // matches Figma z-dropdown
+  --z-sticky: 1020; // matches Figma z-sticky
+  --z-fixed: 1030; // matches Figma z-fixed
+  --z-modal-backdrop: 1040; // matches Figma z-modal-backdrop
+  --z-modal: 1050; // matches Figma z-modal
+  --z-popover: 1060; // matches Figma z-popover
+  --z-tooltip: 1070; // matches Figma z-tooltip
 
-  // Motion durations
-  --motion-duration-instant: 1ms;
-  --motion-duration-fast: 50ms;
-  --motion-duration-normal: 100ms;
-  --motion-duration-slow: 200ms;
-  --motion-duration-slower: 300ms;
-  --motion-duration-slowest: 500ms;
+  // Motion durations - Updated to match Figma motion values
+  --motion-duration-instant: 1ms; // matches Figma motion-duration-instant
+  --motion-duration-fast: 50ms; // matches Figma motion-duration-fast
+  --motion-duration-normal: 100ms; // matches Figma motion-duration-normal
+  --motion-duration-slow: 200ms; // matches Figma motion-duration-slow
+  --motion-duration-slower: 300ms; // matches Figma motion-duration-slower
+  --motion-duration-slowest: 500ms; // matches Figma motion-duration-slowest
 
   // Motion easing
   --motion-easing-linear: linear;
@@ -284,12 +301,12 @@
   --motion-transition-elastic: all var(--motion-duration-slow)
     var(--motion-easing-elastic);
 
-  // Transform and shadow tokens
+  // Transform and shadow tokens - Updated to match Figma shadow values
   --transform-hover: translateY(-1px);
   --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.15);
   --shadow-normal: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
-  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12); // matches Figma shadow-shadow-md-1
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.15); // matches Figma shadow-shadow-lg-1
 
   // Focus and outline tokens
   --outline-focus: var(--border-width-normal) solid var(--color-border-focus);
@@ -302,9 +319,9 @@
   --size-dropdown-option-min-width: 100px;
 }
 
-// Dark theme colors - Using new surface color system
+// Dark theme colors - Using new surface color system - Updated to match Figma dark theme
 [data-theme="dark"] {
-  // New Surface Color System for Dark Mode
+  // New Surface Color System for Dark Mode - Updated to match Figma dark values
   --color-surface-0: #121212; // Base surface
   --color-surface-1: #1e1e1e; // Surface 1
   --color-surface-2: #232323; // Surface 2
@@ -316,7 +333,7 @@
   --color-on-surface-variant: #a8a8a8; // Secondary text
   --color-divider: #3a3a3a; // Divider/border
 
-  // Gray scale (keeping for backward compatibility)
+  // Gray scale (keeping for backward compatibility) - Updated for dark theme
   --color-gray-0: var(--color-surface-1);
   --color-gray-1: var(--color-surface-2);
   --color-gray-2: var(--color-surface-3);
@@ -347,13 +364,13 @@
   --color-border-secondary: var(--color-surface-4);
   --color-border-focus: var(--color-blue-6);
 
-  // Primary colors using design system tokens
-  --color-primary: var(--color-blue-6);
-  --color-primary-1: var(--color-blue-9);
-  --color-primary-6: var(--color-blue-6);
-  --color-primary-7: var(--color-blue-5);
+  // Primary colors using design system tokens - Updated to match Figma
+  --color-primary: var(--color-blue-6); // matches Figma primary-color-6
+  --color-primary-1: var(--color-blue-9); // matches Figma primary-color-9
+  --color-primary-6: var(--color-blue-6); // matches Figma primary-color-6
+  --color-primary-7: var(--color-blue-5); // matches Figma primary-color-5
 
-  // Component-specific colors
+  // Component-specific colors - Updated to match Figma dark theme
   --color-button-primary: var(--color-blue-6);
   --color-button-primary-hover: var(--color-blue-5);
   --color-button-secondary: var(--color-surface-2);
@@ -363,25 +380,25 @@
   --color-button-text: var(--color-on-surface-variant);
   --color-button-text-hover: var(--color-on-surface);
 
-  // Input colors
+  // Input colors - Updated to match Figma dark theme
   --color-input-background: var(--color-surface-1);
   --color-input-border: var(--color-divider);
   --color-input-border-focus: var(--color-blue-6);
   --color-input-text: var(--color-on-surface);
   --color-input-placeholder: var(--color-on-surface-variant);
 
-  // Icon colors
+  // Icon colors - Updated to match Figma dark theme
   --color-icon-primary: var(--color-on-surface);
   --color-icon-secondary: var(--color-on-surface-variant);
   --color-icon-muted: var(--color-on-surface-variant);
   --color-icon-inherit: currentColor;
 
-  // Status colors using design system tokens
+  // Status colors using design system tokens - Updated to match Figma
   --color-success: var(--color-green-6);
   --color-warning: var(--color-yellow-6);
   --color-error: var(--color-red-6);
   --color-info: var(--color-blue-6);
 
-  // Shadows
+  // Shadows - Updated for dark theme
   --color-shadow: rgba(0, 0, 0, 0.3);
 }

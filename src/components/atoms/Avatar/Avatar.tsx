@@ -6,7 +6,7 @@ import styles from "./Avatar.module.scss";
 import type { SxProps } from "../../../styles/stylesApi";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
-import { useTheme } from "../../../contexts/ThemeContext";
+import { isDark } from '../../../utils/themeUtils';
 
 export interface AvatarProps extends WithSxProps {
   /** Avatar type */
@@ -43,7 +43,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   sx,
   style,
 }) => {
-  const { isDark } = useTheme();
+  
   const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
     sx,
     style,
@@ -125,7 +125,7 @@ export const Avatar: React.FC<AvatarProps> = ({
       role={interactive ? "button" : undefined}
       tabIndex={interactive ? 0 : undefined}
       style={sxStyle}
-      data-theme={isDark ? "dark" : "light"}
+      data-theme={isDark() ? "dark" : "light"}
     >
       {renderContent()}
       {/* Fallback initials for image type */}

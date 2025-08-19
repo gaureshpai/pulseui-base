@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../Button/Button";
 import { Icon } from "../Icon/Icon";
 import { WbSunny, Bedtime } from "../Icon/IconSet";
-import { useTheme } from "../../../contexts/ThemeContext";
+import { isDark, toggleTheme } from "../../../utils/themeUtils";
 import styles from "./ThemeToggle.module.scss";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
@@ -40,8 +40,6 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   sx,
   style,
 }) => {
-  const { isDark, toggleTheme } = useTheme();
-
   const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
     sx,
     style,
@@ -53,8 +51,9 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   };
 
   // Get current icon and label
-  const CurrentIcon = isDark ? lightIcon : darkIcon;
-  const currentLabel = isDark ? lightLabel : darkLabel;
+  const currentIsDark = isDark();
+  const CurrentIcon = currentIsDark ? lightIcon : darkIcon;
+  const currentLabel = currentIsDark ? lightLabel : darkLabel;
   const themeName = showThemeName ? `Switch to ${currentLabel}` : currentLabel;
 
   const toggleClasses = combineClassNames(styles.themeToggle, sxClassName);
@@ -66,8 +65,8 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       onClick={handleToggle}
       className={toggleClasses}
       style={sxStyle}
-      aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
-      data-theme={isDark ? "dark" : "light"}
+      aria-label={`Switch to ${currentIsDark ? "light" : "dark"} theme`}
+      data-theme={currentIsDark ? "dark" : "light"}
     >
       <Icon
         icon={CurrentIcon}

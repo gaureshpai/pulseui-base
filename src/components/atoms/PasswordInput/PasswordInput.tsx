@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TextInput } from "../TextInput";
 import { PasswordStrengthMeter } from "./PasswordStrengthMeter";
 import type { WithSxProps } from "../../../utils/sxUtils";
-import { useTheme } from "../../../contexts/ThemeContext";
+import { isDark } from '../../../utils/themeUtils';
 
 export interface PasswordInputProps extends WithSxProps {
   /** Input label */
@@ -60,7 +60,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   sx,
   style,
 }) => {
-  const { isDark } = useTheme();
+  
   // Internal state for password visibility
   const [internalPasswordVisible, setInternalPasswordVisible] = useState(false);
 

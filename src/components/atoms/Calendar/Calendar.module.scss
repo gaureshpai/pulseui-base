@@ -11,6 +11,7 @@
   box-shadow: var(--shadow-normal);
   min-width: var(--widget-min-width);
   max-width: var(--widget-max-width);
+  color: var(--color-text-primary);
 
   &.disabled {
     opacity: var(--opacity-50);
@@ -50,6 +51,33 @@
         &:disabled {
           opacity: var(--opacity-50);
           cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  // Dark theme support
+  [data-theme="dark"] {
+    .calendar {
+      background-color: var(--color-surface);
+      border-color: var(--color-border-secondary);
+      color: var(--color-text-primary);
+      box-shadow: var(--shadow-normal);
+    }
+
+    .header {
+      .title {
+        color: var(--color-text-primary);
+      }
+
+      .navigation {
+        button {
+          background: var(--color-surface-secondary);
+          color: var(--color-text-primary);
+
+          &:hover:not(:disabled) {
+            background: var(--color-surface-tertiary);
+          }
         }
       }
     }
