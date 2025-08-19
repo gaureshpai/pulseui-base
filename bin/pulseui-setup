@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+/**
+ * PulseUI Figma Setup - Standalone Executable
+ * This script can be run by npm users after installing the package
+ */
+
+import { fileURLToPath, pathToFileURL } from "url";
+import { dirname, join } from "path";
+import fs from "fs";
+
+// Get the directory where this script is located
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Path to the setup script in the installed package
+const setupScriptPath = join(
+  __dirname,
+  "..",
+  "scripts",
+  "setup-figma-integration.js"
+);
+
+// Check if the setup script exists
+if (!fs.existsSync(setupScriptPath)) {
+  console.error("❌ Setup script not found. Please reinstall pulseui-base.");
+  process.exit(1);
+}
+
+// Import and run the setup script
+try {
+  const setupScript = await import(pathToFileURL(setupScriptPath).href);
+
+  // If the script exports a main function, call it
+  if (typeof setupScript.default === "function") {
+    setupScript.default();
+  } else if (typeof setupScript === "function") {
+    setupScript();
+  } else {
+    console.log("⚠️  Setup script loaded but no main function found");
+    console.log("Please run: npm install pulseui-base --force");
+  }
+} catch (error) {
+  console.error("❌ Failed to run setup script:", error.message);
+  console.log("");
+  console.log("💡 Try reinstalling the package:");
+  console.log("   npm uninstall pulseui-base");
+  console.log("   npm install pulseui-base");
+  process.exit(1);
+}

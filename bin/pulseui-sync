@@ -1,0 +1,87 @@
+#!/usr/bin/env node
+
+/**
+ * PulseUI Token Sync - Standalone Executable
+ * This script can be run by npm users to sync their Figma design tokens
+ */
+
+import { fileURLToPath, pathToFileURL } from "url";
+import { dirname, join } from "path";
+import fs from "fs";
+
+// Get the directory where this script is located
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Path to the sync script in the installed package
+const syncScriptPath = join(
+  __dirname,
+  "..",
+  "scripts",
+  "sync-figma-tokens-enhanced.js"
+);
+
+// Check if the sync script exists
+if (!fs.existsSync(syncScriptPath)) {
+  console.error("❌ Sync script not found. Please reinstall pulseui-base.");
+  process.exit(1);
+}
+
+// Check if .env file exists
+const envPath = join(process.cwd(), ".env");
+if (!fs.existsSync(envPath)) {
+  console.error("❌ No .env file found in current directory.");
+  console.log("");
+  console.log("💡 You need to set up Figma integration first:");
+  console.log("   npx pulseui-setup");
+  console.log("");
+  console.log("   Or create a .env file manually with:");
+  console.log("   FIGMA_API_TOKEN=your_token_here");
+  console.log("   FIGMA_FILE_KEY=your_file_key_here");
+  console.log("   BRAND_NAME=your_brand_name");
+  process.exit(1);
+}
+
+// Load .env file
+try {
+  const envContent = fs.readFileSync(envPath, "utf8");
+  const envLines = envContent.split("\n");
+  
+  envLines.forEach((line) => {
+    const trimmedLine = line.trim();
+    if (trimmedLine && !trimmedLine.startsWith("#")) {
+      const [key, ...valueParts] = trimmedLine.split("=");
+      if (key && valueParts.length > 0) {
+        const value = valueParts.join("=");
+        process.env[key] = value;
+      }
+    }
+  });
+  
+  console.log("✅ Loaded environment variables from .env");
+} catch (error) {
+  console.error("❌ Failed to load .env file:", error.message);
+  process.exit(1);
+}
+
+// Import and run the sync script
+try {
+  const syncScript = await import(pathToFileURL(syncScriptPath).href);
+
+  // If the script exports a main function, call it
+  if (typeof syncScript.default === "function") {
+    syncScript.default();
+  } else if (typeof syncScript === "function") {
+    syncScript();
+  } else {
+    console.log("⚠️  Sync script loaded but no main function found");
+    console.log("Please run: npm install pulseui-base --force");
+  }
+} catch (error) {
+  console.error("❌ Failed to run sync script:", error.message);
+  console.log("");
+  console.log("💡 Try reinstalling the package:");
+  console.log("   npm uninstall pulseui-base");
+  console.log("   npm install pulseui-base");
+  process.exit(1);
+}
