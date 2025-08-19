@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./SimpleTopNav.module.scss";
 import type { SxProps } from "../../../styles/stylesApi";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
 import { Icon } from "../Icon/Icon";
-import { Menu, Close, Home, Person, Store, Email } from "../Icon/IconSet";
+import { Menu, Close, Home, Person, Store, Email, WbSunny, Bedtime } from "../Icon/IconSet";
 import type { SvgIconComponent } from "@mui/icons-material";
 import { useBreakpoint } from "../../../hooks/useBreakpoint";
-import { isDark } from '../../../utils/themeUtils';
+import { isDark, toggleTheme } from '../../../utils/themeUtils';
 import { VersionSelector } from "./VersionSelector";
+import { ActionButton } from "../ActionButton/ActionButton";
 
 export interface SimpleTopNavItem {
   /** Unique identifier for the nav item */
@@ -75,6 +76,7 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(
     defaultMobileMenuOpen
   );
+  const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>(isDark() ? 'dark' : 'light');
   const { isMobile, isTablet, isDesktop } = useBreakpoint();
   
 
@@ -86,6 +88,23 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
 
   const navClasses = combineClassNames(styles.simpleTopNav, sxClassName);
 
+  // Update theme state when it changes
+  useEffect(() => {
+    const updateTheme = () => {
+      setCurrentTheme(isDark() ? 'dark' : 'light');
+    };
+
+    // Listen for theme changes
+    window.addEventListener('storage', updateTheme);
+    
+    // Check theme on mount
+    updateTheme();
+
+    return () => {
+      window.removeEventListener('storage', updateTheme);
+    };
+  }, []);
+
   const handleItemClick = (item: SimpleTopNavItem) => {
     if (item.onClick) {
       item.onClick();
@@ -96,6 +115,22 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const handleThemeToggle = () => {
+    toggleTheme();
+    // Update local state immediately for responsive UI
+    setCurrentTheme(currentTheme === 'light' ? 'dark' : 'light');
+  };
+
+  // Get the appropriate icon based on current theme
+  const getThemeIcon = (): SvgIconComponent => {
+    return currentTheme === 'dark' ? WbSunny : Bedtime;
+  };
+
+  // Get the appropriate aria label based on current theme
+  const getThemeAriaLabel = (): string => {
+    return currentTheme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';
   };
 
   const renderNavItem = (item: SimpleTopNavItem, isMobile: boolean = false) => {
@@ -165,7 +200,7 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
       <nav
         className={navClasses}
         style={sxStyle}
-        data-theme={isDark() ? "dark" : "light"}
+        data-theme={currentTheme}
       >
         {showBrand && (
           <div className={styles.brand}>
@@ -174,14 +209,24 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
               <h1 className={styles.brandName}>{brandName}</h1>
               {brandTitle && <p className={styles.brandTitle}>{brandTitle}</p>}
             </div>
-            {versionSelector.show && (
-              <VersionSelector
-                version={versionSelector.version}
-                versions={versionSelector.versions}
-                onVersionChange={versionSelector.onVersionChange}
-                className={styles.versionSelector}
+            <div className={styles.brandActions}>
+              {versionSelector.show && (
+                <VersionSelector
+                  version={versionSelector.version}
+                  versions={versionSelector.versions}
+                  onVersionChange={versionSelector.onVersionChange}
+                  className={styles.versionSelector}
+                />
+              )}
+              <ActionButton
+                icon={getThemeIcon()}
+                variant="subtle"
+                size="sm"
+                onClick={handleThemeToggle}
+                className={styles.themeToggle}
+                aria-label={getThemeAriaLabel()}
               />
-            )}
+            </div>
           </div>
         )}
 
@@ -219,19 +264,29 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
           className={`${styles.mobileNavigation} ${
             isMobileMenuOpen ? styles.open : ""
           }`}
-          data-theme={isDark() ? "dark" : "light"}
+          data-theme={currentTheme}
         >
           <div className={styles.mobileNavContent}>
             <div className={styles.mobileNavHeader}>
               <h2 className={styles.mobileNavTitle}>Navigation</h2>
-              <button
-                className={styles.mobileNavCloseButton}
-                onClick={toggleMobileMenu}
-                aria-label="Close mobile menu"
-                type="button"
-              >
-                <Icon icon={Close} size="md" color="inherit" />
-              </button>
+              <div className={styles.mobileNavActions}>
+                <ActionButton
+                  icon={getThemeIcon()}
+                  variant="subtle"
+                  size="sm"
+                  onClick={handleThemeToggle}
+                  className={styles.mobileThemeToggle}
+                  aria-label={getThemeAriaLabel()}
+                />
+                <button
+                  className={styles.mobileNavCloseButton}
+                  onClick={toggleMobileMenu}
+                  aria-label="Close mobile menu"
+                  type="button"
+                >
+                  <Icon icon={Close} size="md" color="inherit" />
+                </button>
+              </div>
             </div>
             <div className={styles.mobileNavItems}>
               {navItems.map((item) => renderNavItem(item, true))}

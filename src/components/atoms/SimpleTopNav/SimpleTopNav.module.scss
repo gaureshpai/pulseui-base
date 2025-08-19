@@ -47,6 +47,23 @@
   flex-shrink: 0;
 }
 
+.brandActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-left: var(--spacing-lg);
+  flex-shrink: 0;
+}
+
+.themeToggle {
+  flex-shrink: 0;
+  
+  &:hover {
+    transform: scale(1.05);
+    transition: transform var(--motion-duration-fast) var(--motion-easing-ease-out);
+  }
+}
+
 .brandName {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
@@ -216,6 +233,21 @@
   margin-bottom: var(--spacing-xl);
   padding-bottom: var(--spacing-lg);
   border-bottom: var(--border-width-thin) solid var(--color-border-secondary);
+}
+
+.mobileNavActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.mobileThemeToggle {
+  flex-shrink: 0;
+  
+  &:hover {
+    transform: scale(1.05);
+    transition: transform var(--motion-duration-fast) var(--motion-easing-ease-out);
+  }
 }
 
 .mobileNavTitle {
