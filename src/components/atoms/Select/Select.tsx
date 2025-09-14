@@ -48,14 +48,22 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       className = "",
       sx,
       style,
-    },
-    ) => {
+    }, ref) => {
     const [internalValue, setInternalValue] = useState(defaultValue || "");
     const [isOpen, setIsOpen] = useState(false);
     const listboxId = React.useId();
     const [focusedIndex, setFocusedIndex] = useState(-1);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const handleRef = (node: HTMLButtonElement | null) => {
+      (buttonRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+      if (typeof ref === 'function') {
+        ref(node);
+      } else if (ref) {
+        (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+      }
+    };
 
     const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
       sx,
@@ -180,7 +188,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
 
         <div className={styles.selectWrapper} ref={dropdownRef}>
           <button
-            ref={buttonRef}
+            ref={handleRef}
             id={selectId}
             name={name}
             type="button"

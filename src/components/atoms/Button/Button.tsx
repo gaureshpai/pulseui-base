@@ -68,7 +68,7 @@ export interface ButtonProps extends WithSxProps {
   tabIndex?: number;
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({
     children,
     leftIcon,
@@ -229,3 +229,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     </button>
   );
 });
+
+ButtonComponent.displayName = "Button";
+
+// Export with proper typing for React 19 compatibility
+export const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>> = ButtonComponent;
