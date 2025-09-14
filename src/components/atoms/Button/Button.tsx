@@ -73,214 +73,188 @@ export interface ButtonProps extends WithSxProps {
   tabIndex?: number;
 }
 
-<<<<<<< HEAD
-export const Button: React.FC<ButtonProps> = ({
-  children,
-  leftIcon,
-  rightIcon,
-  variant = "default",
-  size = "md",
-  state = "default",
-  justify = "center",
-  compact = false,
-  onClick,
-  className = "",
-  disabled = false,
-  loading = false,
-  loadingText = "Loading",
-  type = "button",
-  ariaLabel,
-  ariaPressed,
-  ariaExpanded,
-  ariaControls,
-  ariaDescribedBy,
-  ariaHasPopup,
-  form,
-  formAction,
-  formEncType,
-  formMethod,
-  formTarget,
-  formNoValidate,
-  tabIndex,
-  sx,
-  style,
-}) => {
-=======
 const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({
-    children,
-    leftIcon,
-    rightIcon,
-    variant = "default",
-    size = "md",
-    state = "default",
-    justify = "center",
-    compact = false,
-    onClick,
-    className = "",
-    disabled = false,
-    type = "button",
-    ariaLabel,
-    ariaPressed,
-    ariaExpanded,
-    ariaControls,
-    ariaDescribedBy,
-    ariaHasPopup,
-    form,
-    formAction,
-    formEncType,
-    formMethod,
-    formTarget,
-    formNoValidate,
-    tabIndex,
-    sx,
-    style,
-  }, ref) => {
->>>>>>> e5181dae9fd8eede355d5c37522b55082ed7d126
-  const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
-    sx,
-    style,
-    className
-  );
+  (
+    {
+      children,
+      leftIcon,
+      rightIcon,
+      variant = "default",
+      size = "md",
+      state = "default",
+      justify = "center",
+      compact = false,
+      onClick,
+      className = "",
+      disabled = false,
+      loading = false,
+      loadingText = "Loading",
+      type = "button",
+      ariaLabel,
+      ariaPressed,
+      ariaExpanded,
+      ariaControls,
+      ariaDescribedBy,
+      ariaHasPopup,
+      form,
+      formAction,
+      formEncType,
+      formMethod,
+      formTarget,
+      formNoValidate,
+      tabIndex,
+      sx,
+      style,
+    },
+    ref
+  ) => {
+    const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
+      sx,
+      style,
+      className
+    );
 
-  const buttonClasses = combineClassNames(
-    styles.button,
-    styles[`variant-${variant}`],
-    styles[`size-${size}`],
-    styles[`state-${state}`],
-    styles[`justify-${justify}`],
-    compact && styles.compact,
-    sxClassName
-  );
+    const buttonClasses = combineClassNames(
+      styles.button,
+      styles[`variant-${variant}`],
+      styles[`size-${size}`],
+      styles[`state-${state}`],
+      styles[`justify-${justify}`],
+      compact && styles.compact,
+      sxClassName
+    );
 
-  // Map string values to icon components
-  const getLeftIcon = () => {
-    if (typeof leftIcon === "string") {
-      if (leftIcon === "none") {
-        return null;
+    // Map string values to icon components
+    const getLeftIcon = () => {
+      if (typeof leftIcon === "string") {
+        if (leftIcon === "none") {
+          return null;
+        }
+        const iconMap: Record<string, SvgIconComponent> = {
+          download: Download,
+          upload: Upload,
+          add: Add,
+          remove: Remove,
+          edit: Edit,
+        };
+        return iconMap[leftIcon] || null;
       }
-      const iconMap: Record<string, SvgIconComponent> = {
-        download: Download,
-        upload: Upload,
-        add: Add,
-        remove: Remove,
-        edit: Edit,
-      };
-      return iconMap[leftIcon] || null;
-    }
-    return leftIcon;
-  };
+      return leftIcon;
+    };
 
-  const getRightIcon = () => {
-    if (typeof rightIcon === "string") {
-      if (rightIcon === "none") {
-        return null;
+    const getRightIcon = () => {
+      if (typeof rightIcon === "string") {
+        if (rightIcon === "none") {
+          return null;
+        }
+        const iconMap: Record<string, SvgIconComponent> = {
+          delete: Delete,
+          search: Search,
+          filter: FilterList,
+          refresh: Refresh,
+          settings: Settings,
+        };
+        return iconMap[rightIcon] || null;
       }
-      const iconMap: Record<string, SvgIconComponent> = {
-        delete: Delete,
-        search: Search,
-        filter: FilterList,
-        refresh: Refresh,
-        settings: Settings,
-      };
-      return iconMap[rightIcon] || null;
-    }
-    return rightIcon;
-  };
+      return rightIcon;
+    };
 
-  const leftIconComponent = getLeftIcon();
-  const rightIconComponent = getRightIcon();
+    const leftIconComponent = getLeftIcon();
+    const rightIconComponent = getRightIcon();
 
-  // Map button size to icon size
-  const getIconSize = (buttonSize: string) => {
-    switch (buttonSize) {
-      case "xs":
-        return "xs";
-      case "sm":
-        return "sm";
-      case "md":
-        return "md";
-      case "lg":
-        return "lg";
-      case "xl":
-        return "lg";
-      default:
-        return "md";
-    }
-  };
-
-  const iconSize = getIconSize(size);
-
-  // Handle keyboard events for accessibility
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      if (onClick && !disabled && state !== "disabled") {
-        onClick();
+    // Map button size to icon size
+    const getIconSize = (buttonSize: string) => {
+      switch (buttonSize) {
+        case "xs":
+          return "xs";
+        case "sm":
+          return "sm";
+        case "md":
+          return "md";
+        case "lg":
+          return "lg";
+        case "xl":
+          return "lg";
+        default:
+          return "md";
       }
-    }
-  };
+    };
 
-  return (
-    <button
-      ref={ref}
-      type={type}
-      className={buttonClasses}
-      onClick={onClick}
-      onKeyDown={handleKeyDown}
-      disabled={disabled || state === "disabled" || loading}
-      style={sxStyle}
-      aria-label={ariaLabel}
-      aria-pressed={ariaPressed}
-      aria-expanded={ariaExpanded}
-      aria-controls={ariaControls}
-      aria-describedby={ariaDescribedBy}
-      aria-haspopup={ariaHasPopup}
-      form={form}
-      formAction={formAction}
-      formEncType={formEncType}
-      formMethod={formMethod}
-      formTarget={formTarget}
-      formNoValidate={formNoValidate}
-      tabIndex={tabIndex}
-      role={type === "button" ? undefined : type}
-    >
-      {loading ? (
-        <>
-          <Spinner size={iconSize} color="primary" />
-          <span className={styles.content} style={{ marginLeft: "8px" }}>
-            Loading!
-          </span>
-        </>
-      ) : (
-        <>
-          {leftIconComponent && (
-            <Icon
-              icon={leftIconComponent}
-              size={iconSize}
-              color="inherit"
-              className={styles.left}
-              aria-hidden="true"
-            />
-          )}
-          <span className={styles.content}>{children}</span>
-          {rightIconComponent && (
-            <Icon
-              icon={rightIconComponent}
-              size={iconSize}
-              color="inherit"
-              className={styles.right}
-              aria-hidden="true"
-              sx={{ paddingBottom: 0, marginBottom: 0 }}
-            />
-          )}
-        </>
-      )}
-    </button>
-  );
-});
+    const iconSize = getIconSize(size);
+
+    // Handle keyboard events for accessibility
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        if (onClick && !disabled && state !== "disabled") {
+          onClick();
+        }
+      }
+    };
+
+    return (
+      <button
+        ref={ref}
+        type={type}
+        className={buttonClasses}
+        onClick={onClick}
+        onKeyDown={handleKeyDown}
+        disabled={disabled || state === "disabled" || loading}
+        style={sxStyle}
+        aria-label={ariaLabel}
+        aria-pressed={ariaPressed}
+        aria-expanded={ariaExpanded}
+        aria-controls={ariaControls}
+        aria-describedby={ariaDescribedBy}
+        aria-haspopup={ariaHasPopup}
+        form={form}
+        formAction={formAction}
+        formEncType={formEncType}
+        formMethod={formMethod}
+        formTarget={formTarget}
+        formNoValidate={formNoValidate}
+        tabIndex={tabIndex}
+        role={type === "button" ? undefined : type}
+      >
+        {loading ? (
+          <>
+            <Spinner size={iconSize} color="primary" />
+            <span className={styles.content} style={{ marginLeft: "8px" }}>
+              {loadingText}
+            </span>
+          </>
+        ) : (
+          <>
+            {leftIconComponent && (
+              <Icon
+                icon={leftIconComponent}
+                size={iconSize}
+                color="inherit"
+                className={styles.left}
+                aria-hidden="true"
+              />
+            )}
+            <span className={styles.content}>{children}</span>
+            {rightIconComponent && (
+              <Icon
+                icon={rightIconComponent}
+                size={iconSize}
+                color="inherit"
+                className={styles.right}
+                aria-hidden="true"
+                sx={{ paddingBottom: 0, marginBottom: 0 }}
+              />
+            )}
+          </>
+        )}
+      </button>
+    );
+  }
+);
 
 ButtonComponent.displayName = "Button";
 
 // Export with proper typing for React 19 compatibility
-export const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>> = ButtonComponent;
+export const Button: React.ForwardRefExoticComponent<
+  ButtonProps & React.RefAttributes<HTMLButtonElement>
+> = ButtonComponent;

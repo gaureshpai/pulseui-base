@@ -127,7 +127,7 @@
   // Orange scale
   --color-orange-0: #fff4e6;
   --color-orange-1: #ffe8cc;
-  --color-orange-2: #ffdbA8;
+  --color-orange-2: #ffdba8;
   --color-orange-3: #ffc078;
   --color-orange-4: #ffa94d;
   --color-orange-5: #ff922b;
@@ -180,8 +180,6 @@
 
   --color-button-primary: var(--color-blue-8);
 
-
-  
   --color-button-primary-hover: var(--color-blue-7);
   --color-button-secondary: var(--color-surface-1);
   --color-button-secondary-hover: var(--color-surface-2);
@@ -453,7 +451,9 @@
   --color-border-focus: var(--color-blue-6);
 
   // Primary colors using design system tokens
-  --color-primary: var(--color-blue-6);
+
+  --color-primary: var(--color-green-6);
+
   --color-primary-1: var(--color-blue-9);
   --color-primary-6: var(--color-blue-6);
   --color-primary-7: var(--color-blue-5);
@@ -1034,7 +1034,6 @@
 // =============================================================================
 [data-brand="labsync"][data-mode="light"] {
   --font-family: "IBM Plex Sans", sans-serif;
-  border-radius: var(--radius-full);
 
   // Primary brand colors (purple-cyan lab theme)
   --color-blue-0: #f3f0ff;
@@ -1488,7 +1487,7 @@
 // =============================================================================
 [data-brand="uber"][data-mode="light"] {
   --font-family: "Uber Move", "UberMove", "UberMoveText", "Uber Move Text",
-   
+    sans-serif;
 
   // Primary brand colors (Uber Base = Safety Blue, not green)
   --color-blue-0: #f5f9ff;
@@ -1605,7 +1604,7 @@
 // =============================================================================
 [data-brand="uber"][data-mode="dark"] {
   --font-family: "Uber Move", "UberMove", "UberMoveText", "Uber Move Text",
-  
+    sans-serif;
 
   // Primary brand colors for dark mode (Safety Blue tones)
   --color-blue-0: #081c42;

@@ -29,27 +29,6 @@ export interface SelectProps extends WithSxProps {
 }
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
-<<<<<<< HEAD
-  ({
-    id,
-    name,
-    value,
-    defaultValue,
-    options,
-    placeholder = "Select an option",
-    disabled = false,
-    required = false,
-    error,
-    size = "md",
-    label,
-    onChange,
-    onFocus,
-    onBlur,
-    className = "",
-    sx,
-    style,
-  }) => {
-=======
   (
     {
       id,
@@ -69,8 +48,9 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       className = "",
       sx,
       style,
-    }, ref) => {
->>>>>>> e5181dae9fd8eede355d5c37522b55082ed7d126
+    },
+    ref
+  ) => {
     const [internalValue, setInternalValue] = useState(defaultValue || "");
     const [isOpen, setIsOpen] = useState(false);
     const listboxId = React.useId();
@@ -79,11 +59,13 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     const handleRef = (node: HTMLButtonElement | null) => {
-      (buttonRef as React.MutableRefObject<HTMLButtonElement | null>).current = node;
-      if (typeof ref === 'function') {
+      (buttonRef as React.MutableRefObject<HTMLButtonElement | null>).current =
+        node;
+      if (typeof ref === "function") {
         ref(node);
       } else if (ref) {
-        (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+        (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+          node;
       }
     };
 
