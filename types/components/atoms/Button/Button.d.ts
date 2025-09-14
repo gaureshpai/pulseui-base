@@ -51,4 +51,4 @@ export interface ButtonProps extends WithSxProps {
     /** Tab index for keyboard navigation */
     tabIndex?: number;
 }
-export declare const Button: React.FC<ButtonProps>;
+export declare const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>>;

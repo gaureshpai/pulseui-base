@@ -3,7 +3,7 @@
 ⚡ **Ultra-lightweight React component library** with design tokens, multi-brand theming, and TypeScript support. Zero heavy dependencies - perfect for production apps.
 
 [![npm version](https://badge.fury.io/js/pulseui-base.svg)](https://badge.fury.io/js/pulseui-base)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache](https://img.shields.io/badge/License-Apache-yellow.svg)](https://opensource.org/licenses/Apache)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8+-blue.svg)](https://www.typescriptlang.org/)
 
 ## ✨ Features
@@ -34,7 +34,6 @@ pnpm add pulseui-base
 ```tsx
 import React from "react";
 import { Button, ThemeProvider, useTheme } from "pulseui-base";
-import "pulseui-base/styles";
 
 function App() {
   return (
@@ -216,14 +215,11 @@ pulseui-base/
 // Main library
 import { Button, Input, Modal } from "pulseui-base";
 
-// Styles only
-import "pulseui-base/styles";
+// Styles are automatically included when importing components.
+// No separate CSS import is needed for basic usage.
 
-// SCSS source (for customization)
+// SCSS source (for advanced customization)
 import "pulseui-base/scss";
-
-// Compiled CSS
-import "pulseui-base/scss-compiled";
 ```
 
 ## 🛠️ Development
@@ -236,7 +232,7 @@ import "pulseui-base/scss-compiled";
 ### Setup
 
 ```bash
-git clone https://github.com/kazuri1/Pulseui.git
+git clone https://github.com/kazuri1/pulseui-base.git
 cd Pulseui
 npm install
 ```
@@ -264,13 +260,13 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
-- 📖 [Documentation](https://github.com/kazuri1/Pulseui)
-- 🐛 [Issue Tracker](https://github.com/kazuri1/Pulseui/issues)
-- 💬 [Discussions](https://github.com/kazuri1/Pulseui/discussions)
+- 📖 [Documentation](https://github.com/kazuri1/pulseui-base)
+- 🐛 [Issue Tracker](https://github.com/kazuri1/pulseui-base/issues)
+- 💬 [Discussions](https://github.com/kazuri1/pulseui-base/discussions)
 
 ## 🙏 Acknowledgments
 

@@ -1,3 +1,6 @@
+// Import all styles automatically when importing any component
+import "./styles/pulseui-base.scss";
+
 // Core Components
 export { Button } from "./components/atoms/Button";
 export type { ButtonProps } from "./components/atoms/Button";

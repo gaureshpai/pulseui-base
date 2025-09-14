@@ -73,6 +73,7 @@ export interface ButtonProps extends WithSxProps {
   tabIndex?: number;
 }
 
+<<<<<<< HEAD
 export const Button: React.FC<ButtonProps> = ({
   children,
   leftIcon,
@@ -104,6 +105,38 @@ export const Button: React.FC<ButtonProps> = ({
   sx,
   style,
 }) => {
+=======
+const ButtonComponent = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({
+    children,
+    leftIcon,
+    rightIcon,
+    variant = "default",
+    size = "md",
+    state = "default",
+    justify = "center",
+    compact = false,
+    onClick,
+    className = "",
+    disabled = false,
+    type = "button",
+    ariaLabel,
+    ariaPressed,
+    ariaExpanded,
+    ariaControls,
+    ariaDescribedBy,
+    ariaHasPopup,
+    form,
+    formAction,
+    formEncType,
+    formMethod,
+    formTarget,
+    formNoValidate,
+    tabIndex,
+    sx,
+    style,
+  }, ref) => {
+>>>>>>> e5181dae9fd8eede355d5c37522b55082ed7d126
   const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
     sx,
     style,
@@ -190,6 +223,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
+      ref={ref}
       type={type}
       className={buttonClasses}
       onClick={onClick}
@@ -244,4 +278,9 @@ export const Button: React.FC<ButtonProps> = ({
       )}
     </button>
   );
-};
+});
+
+ButtonComponent.displayName = "Button";
+
+// Export with proper typing for React 19 compatibility
+export const Button: React.ForwardRefExoticComponent<ButtonProps & React.RefAttributes<HTMLButtonElement>> = ButtonComponent;
