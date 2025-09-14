@@ -34,7 +34,6 @@ pnpm add pulseui-base
 ```tsx
 import React from "react";
 import { Button, ThemeProvider, useTheme } from "pulseui-base";
-import "pulseui-base/styles";
 
 function App() {
   return (
@@ -216,14 +215,11 @@ pulseui-base/
 // Main library
 import { Button, Input, Modal } from "pulseui-base";
 
-// Styles only
-import "pulseui-base/styles";
+// Styles are automatically included when importing components.
+// No separate CSS import is needed for basic usage.
 
-// SCSS source (for customization)
+// SCSS source (for advanced customization)
 import "pulseui-base/scss";
-
-// Compiled CSS
-import "pulseui-base/scss-compiled";
 ```
 
 ## 🛠️ Development
