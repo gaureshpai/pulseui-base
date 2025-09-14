@@ -7,6 +7,15 @@ import {
   Search,
   Sync,
   Delete,
+  Notifications,
+  Payment,
+  Fingerprint,
+  VpnKey,
+  Storage,
+  LockOutlined,
+  Add,
+  Person,
+  Visibility,
 } from "../components/atoms/Icon/IconSet";
 import {
   // Core Components
@@ -19,6 +28,7 @@ import {
   Switch,
   Select,
   Checkbox,
+  Toggle,
   Alert,
   Pagination,
   ProgressBar,
@@ -31,7 +41,11 @@ import {
   Card,
   Avatar,
   Pill,
-  Kbd,
+  ProfileCard,
+  UserProfile,
+  LeftDrawer,
+  MetricCard,
+  NewPatientDashboard,
   Tag,
 
   // Accordion Components
@@ -56,6 +70,7 @@ import {
 
   // Date and Input Components
   Calendar,
+  DateRangePicker,
   PasswordInput,
 
   // Interactive Components
@@ -96,6 +111,88 @@ export function ComponentsPage() {
     "primary" | "secondary" | "success" | "warning"
   >("primary");
 
+  // Button loading state
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const [buttonVariant, setButtonVariant] = useState<
+    "filled" | "subtle" | "light" | "outline" | "white" | "default"
+  >("filled");
+
+  // Toggle state
+  const [toggleVariant, setToggleVariant] = useState<
+    "default" | "disabled" | "error" | "custom-slots"
+  >("default");
+
+  // UserProfile state
+  const [userProfileVariant, setUserProfileVariant] = useState<
+    "default" | "compact" | "detailed" | "clickable" | "disabled"
+  >("default");
+
+  // MetricCard state
+  const [metricCardVariant, setMetricCardVariant] = useState<
+    "default" | "clickable" | "negative-trend" | "no-trend"
+  >("default");
+
+  // NewPatientDashboard state
+  const [newPatientVariant, setNewPatientVariant] = useState<
+    "default" | "custom-data" | "negative-trend"
+  >("default");
+
+  // LeftDrawer state
+  const [isLeftDrawerOpen, setIsLeftDrawerOpen] = useState(false);
+
+  // Menu items matching the screenshot
+  const menuItems = [
+    {
+      id: "notifications",
+      label: "Notifications",
+      icon: Notifications,
+      onClick: () => console.log("Notifications clicked"),
+    },
+    {
+      id: "billing",
+      label: "Billing",
+      icon: Payment,
+      onClick: () => console.log("Billing clicked"),
+    },
+    {
+      id: "security",
+      label: "Security",
+      icon: Fingerprint,
+      onClick: () => console.log("Security clicked"),
+    },
+    {
+      id: "ssh-keys",
+      label: "SSH Keys",
+      icon: VpnKey,
+      onClick: () => console.log("SSH Keys clicked"),
+    },
+    {
+      id: "databases",
+      label: "Databases",
+      icon: Storage,
+      onClick: () => console.log("Databases clicked"),
+    },
+    {
+      id: "authentication",
+      label: "Authentication",
+      icon: LockOutlined,
+      onClick: () => console.log("Authentication clicked"),
+    },
+    {
+      id: "other-settings",
+      label: "Other Settings",
+      icon: Settings,
+      onClick: () => console.log("Other Settings clicked"),
+    },
+    {
+      id: "add-bookmark",
+      label: "Add Bookmark",
+      icon: Add,
+      onClick: () => console.log("Add Bookmark clicked"),
+      isAction: true,
+    },
+  ];
+
   const [paginationState, setPaginationState] = React.useState<
     "xs" | "sm" | "md" | "lg" | "xl"
   >("md");
@@ -130,9 +227,7 @@ export function ComponentsPage() {
   >(
     isMobile ? "xs" : "md" // ✅ default state respects mobile
   );
-  const [kbdState, setKbdState] = React.useState<"sm" | "md" | "lg" | "xl">(
-    "md"
-  );
+  // Removed Kbd size selector in favor of ProfileCard demo
   useEffect(() => {
     setStepperState(isMobile ? "xs" : "md");
   }, [isMobile]);
@@ -152,12 +247,17 @@ export function ComponentsPage() {
   const [drawerShowScroll] = useState(true);
 
   // Calendar state
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
   const [calendarView, setCalendarView] = useState<"month" | "year" | "decade">(
     "month"
   );
+
+  // Date range state
+  const [rangeStart, setRangeStart] = useState<Date | null>(null);
+  const [rangeEnd, setRangeEnd] = useState<Date | null>(null);
+
+  // Date range picker state
+  const [dateRangeStart, setDateRangeStart] = useState("");
+  const [dateRangeEnd, setDateRangeEnd] = useState("");
 
   // Password input state
   const [password, setPassword] = useState("");
@@ -318,20 +418,20 @@ export function ComponentsPage() {
     );
   };
 
-  // Local adapter to preview Radio variants with a controlled group
+  // Local adapter: VariantSelector passes 'variant' string; use it as size
   const RadioGroupPreview: React.FC<{ variant?: string }> = ({
-    variant = "default",
+    variant = "md",
   }) => {
     const [selectedValue, setSelectedValue] = useState<string>("option1");
     return (
-      <>
+      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         <Radio
           label="Option 1"
           name="demo-radio-group"
           value="option1"
           checked={selectedValue === "option1"}
           onChange={() => setSelectedValue("option1")}
-          variant={variant as "default" | "filled" | "outline" | "light"}
+          size={variant as "xs" | "sm" | "md" | "lg" | "xl"}
         />
         <Radio
           label="Option 2"
@@ -339,7 +439,7 @@ export function ComponentsPage() {
           value="option2"
           checked={selectedValue === "option2"}
           onChange={() => setSelectedValue("option2")}
-          variant={variant as "default" | "filled" | "outline" | "light"}
+          size={variant as "xs" | "sm" | "md" | "lg" | "xl"}
         />
         <Radio
           label="Option 3"
@@ -347,9 +447,23 @@ export function ComponentsPage() {
           value="option3"
           checked={selectedValue === "option3"}
           onChange={() => setSelectedValue("option3")}
-          variant={variant as "default" | "filled" | "outline" | "light"}
+          size={variant as "xs" | "sm" | "md" | "lg" | "xl"}
         />
-      </>
+      </div>
+    );
+  };
+
+  // Local adapter: VariantSelector passes 'variant'; use it as Switch size
+  const SwitchSizePreview: React.FC<{ variant?: string }> = ({
+    variant = "md",
+  }) => {
+    return (
+      <Switch
+        label="Switch"
+        defaultChecked={false}
+        onChange={(checked) => console.log("Switch:", checked)}
+        size={variant as "sm" | "md" | "lg"}
+      />
     );
   };
 
@@ -386,14 +500,48 @@ export function ComponentsPage() {
                 "outline",
                 "white",
                 "default",
+                "loading",
               ]}
               defaultVariant="filled"
               label="Select Button Variant:"
-              onVariantChange={(variant) =>
-                console.log(`Button variant changed to: ${variant}`)
-              }
+              onVariantChange={(variant) => {
+                if (variant === "loading") {
+                  setButtonLoading(true);
+                  setButtonVariant("outline");
+                  console.log("Loading state: buttonVariant set to outline");
+                } else {
+                  setButtonLoading(false);
+                  setButtonVariant(
+                    variant as
+                      | "filled"
+                      | "subtle"
+                      | "light"
+                      | "outline"
+                      | "white"
+                      | "default"
+                  );
+                }
+                console.log(
+                  `Button variant changed to: ${variant}, buttonVariant: ${buttonVariant}, loading: ${buttonLoading}`
+                );
+              }}
             >
-              <Button size="md">Button</Button>
+              <Button
+                variant={buttonVariant}
+                loading={buttonLoading}
+                loadingText="Loading..."
+                onClick={() => {
+                  console.log(
+                    `Button clicked - variant: ${buttonVariant}, loading: ${buttonLoading}`
+                  );
+                  if (!buttonLoading) {
+                    setButtonLoading(true);
+                    setTimeout(() => setButtonLoading(false), 3000);
+                  }
+                }}
+              >
+                {buttonLoading ? "Loading..." : "Button"}
+              </Button>
             </VariantSelector>
           </GridCol>
           <GridCol span={span}>
@@ -414,7 +562,7 @@ export function ComponentsPage() {
                 console.log(`Badge variant changed to: ${variant}`)
               }
             >
-              <Badge variant="dot">Dot Badge</Badge>
+              <Badge variant="dot">Badge</Badge>
             </VariantSelector>
           </GridCol>
           <GridCol span={span}>
@@ -474,18 +622,11 @@ export function ComponentsPage() {
           <GridCol span={span}>
             <VariantSelector
               title="Switch Variants"
-              variants={["default", "disabled", "small", "large"]}
-              defaultVariant="default"
-              label="Select Switch Variant:"
-              onVariantChange={(variant) =>
-                console.log(`Switch variant changed to: ${variant}`)
-              }
+              variants={["sm", "md", "lg"]}
+              defaultVariant="md"
+              label="Select Switch Size:"
             >
-              <Switch
-                label="Switch"
-                defaultChecked={false}
-                onChange={(checked) => console.log("Switch:", checked)}
-              />
+              <SwitchSizePreview />
             </VariantSelector>
           </GridCol>
           <GridCol span={span}>
@@ -509,6 +650,47 @@ export function ComponentsPage() {
                   { value: "nextjs", label: "Next.js" },
                 ]}
                 onChange={(value) => console.log("Select:", value)}
+              />
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={span}>
+            <VariantSelector
+              title="Toggle Component"
+              variants={["default", "disabled", "error", "custom-slots"]}
+              defaultVariant="default"
+              label="Toggle State:"
+              onVariantChange={(variant) => {
+                setToggleVariant(
+                  variant as "default" | "disabled" | "error" | "custom-slots"
+                );
+                console.log(`Toggle state changed to: ${variant}`);
+              }}
+            >
+              <Toggle
+                label="Available slot duration"
+                options={
+                  toggleVariant === "custom-slots"
+                    ? [
+                        { value: "1", label: "1 hour" },
+                        { value: "2", label: "2 hours" },
+                        { value: "4", label: "4 hours" },
+                        { value: "6", label: "6 hours" },
+                        { value: "8", label: "8 hours" },
+                      ]
+                    : [
+                        { value: "2", label: "2 hours" },
+                        { value: "4", label: "4 hours" },
+                        { value: "6", label: "6 hours" },
+                      ]
+                }
+                defaultValue="2"
+                disabled={toggleVariant === "disabled"}
+                error={
+                  toggleVariant === "error"
+                    ? "Please select a duration"
+                    : undefined
+                }
+                onChange={(value) => console.log("Toggle:", value)}
               />
             </VariantSelector>
           </GridCol>
@@ -961,86 +1143,15 @@ export function ComponentsPage() {
           {!isMobile && (
             <GridCol span={span}>
               <VariantSelector
-                title="File Upload Component"
-                variants={["default", "drag-drop", "multiple"]}
-                defaultVariant="default"
-                label="Select Upload Type:"
-                onVariantChange={(variant) => {
-                  console.log(`FileUpload variant changed to: ${variant}`);
-                  setUploadedFiles([]); // Clear uploaded files when changing variants
-                }}
+                title="Radio Component"
+                variants={["xs", "sm", "md", "lg", "xl"]}
+                defaultVariant="md"
+                label="Select Radio Size:"
+                onVariantChange={(variant) =>
+                  console.log(`Radio size changed to: ${variant}`)
+                }
               >
-                <div
-                  style={{
-                    width: "100%",
-                    maxWidth: "100%",
-                    overflow: "hidden",
-                    display: "flex",
-                    flexDirection: "column",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <FileUpload
-                      acceptedFileTypes={["jpg", "png", "pdf", "txt"]}
-                      maxFileSize={5 * 1024 * 1024} // 5MB
-                      maxFiles={3}
-                      multiple={true}
-                      uploadText="Drop files here"
-                      browseText="Choose Files"
-                      showFileList={true}
-                      onUpload={(files) => {
-                        setUploadedFiles(files);
-                        console.log(
-                          "Files uploaded:",
-                          files.map((f) => f.name)
-                        );
-                      }}
-                      sx={{
-                        transform: "scale(0.8)",
-                        transformOrigin: "center",
-                        width: "100%",
-                        maxWidth: "100%",
-                        padding: "8px",
-                        "& .fileUpload": {
-                          maxWidth: "100%",
-                          width: "100%",
-                          padding: "12px",
-                        },
-                        "& .dropZone": {
-                          minHeight: "80px",
-                          padding: "12px",
-                        },
-                        "& .header": {
-                          gap: "4px",
-                          marginBottom: "8px",
-                        },
-                        "& .uploadIcon": {
-                          marginBottom: "4px",
-                        },
-                      }}
-                    />
-                  </div>
-                  {uploadedFiles.length > 0 && (
-                    <div
-                      style={{
-                        marginTop: "12px",
-                        padding: "8px",
-                        backgroundColor: "var(--color-surface-secondary)",
-                        borderRadius: "var(--radius-sm)",
-                        margin: "12px auto 0 auto",
-                        wordBreak: "break-word",
-                      }}
-                    >
-                      <Text variant="xs" color="secondary">
-                        Uploaded: {uploadedFiles.map((f) => f.name).join(", ")}
-                      </Text>
-                    </div>
-                  )}
-                </div>
+                <RadioGroupPreview />
               </VariantSelector>
             </GridCol>
           )}
@@ -1293,15 +1404,86 @@ export function ComponentsPage() {
         <Grid gutter="24px">
           <GridCol span={span}>
             <VariantSelector
-              title="Radio Component"
-              variants={["default", "filled", "outline", "light"]}
+              title="File Upload Component"
+              variants={["default", "drag-drop", "multiple"]}
               defaultVariant="default"
-              label="Select Radio Variant:"
-              onVariantChange={(variant) =>
-                console.log(`Radio variant changed to: ${variant}`)
-              }
+              label="Select Upload Type:"
+              onVariantChange={(variant) => {
+                console.log(`FileUpload variant changed to: ${variant}`);
+                setUploadedFiles([]); // Clear uploaded files when changing variants
+              }}
             >
-              <RadioGroupPreview />
+              <div
+                style={{
+                  width: "100%",
+                  maxWidth: "100%",
+                  overflow: "hidden",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <div
+                  style={{
+                    width: "100%",
+                  }}
+                >
+                  <FileUpload
+                    acceptedFileTypes={["jpg", "png", "pdf", "txt"]}
+                    maxFileSize={5 * 1024 * 1024} // 5MB
+                    maxFiles={3}
+                    multiple={true}
+                    uploadText="Drop files here"
+                    browseText="Choose Files"
+                    showFileList={true}
+                    onUpload={(files) => {
+                      setUploadedFiles(files);
+                      console.log(
+                        "Files uploaded:",
+                        files.map((f) => f.name)
+                      );
+                    }}
+                    sx={{
+                      transform: "scale(0.8)",
+                      transformOrigin: "center",
+                      width: "100%",
+                      maxWidth: "100%",
+                      padding: "8px",
+                      "& .fileUpload": {
+                        maxWidth: "100%",
+                        width: "100%",
+                        padding: "12px",
+                      },
+                      "& .dropZone": {
+                        minHeight: "80px",
+                        padding: "12px",
+                      },
+                      "& .header": {
+                        gap: "4px",
+                        marginBottom: "8px",
+                      },
+                      "& .uploadIcon": {
+                        marginBottom: "4px",
+                      },
+                    }}
+                  />
+                </div>
+                {uploadedFiles.length > 0 && (
+                  <div
+                    style={{
+                      marginTop: "12px",
+                      padding: "8px",
+                      backgroundColor: "var(--color-surface-secondary)",
+                      borderRadius: "var(--radius-sm)",
+                      margin: "12px auto 0 auto",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    <Text variant="xs" color="secondary">
+                      Uploaded: {uploadedFiles.map((f) => f.name).join(", ")}
+                    </Text>
+                  </div>
+                )}
+              </div>
             </VariantSelector>
           </GridCol>
           <GridCol span={span}>
@@ -1330,14 +1512,38 @@ export function ComponentsPage() {
           </GridCol>
           <GridCol span={span}>
             <VariantSelector
-              title="Kbd Component"
-              variants={["sm", "md", "lg", "xl"]}
-              defaultVariant="md"
-              onVariantChange={(variant) =>
-                setKbdState(variant as "sm" | "md" | "lg" | "xl")
-              }
+              title="Profile Card"
+              variants={["default"]}
+              defaultVariant="default"
+              onVariantChange={() => {}}
+              showVariantInfo={false}
             >
-              <Kbd size={kbdState}>Ctrl + K</Kbd>
+              <div
+                style={{
+                  width: "100%",
+                  marginTop: "64px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  padding: "8px",
+                  transform: "scale(0.85)",
+                  transformOrigin: "top center",
+                }}
+              >
+                <ProfileCard
+                  email="vignesh@example.com"
+                  bio="Design Systems • Frontend • Accessibility"
+                  hashtag="#pulseui"
+                  posts={128}
+                  followers={5230}
+                  following={412}
+                  sx={{
+                    width: "100%",
+                    maxWidth: "320px",
+                    margin: "0 auto",
+                  }}
+                />
+              </div>
             </VariantSelector>
           </GridCol>
         </Grid>
@@ -1354,6 +1560,47 @@ export function ComponentsPage() {
           Special Components
         </Text>
         <Grid gutter="24px">
+          <GridCol span={span}>
+            <VariantSelector
+              title="UserProfile Component"
+              variants={[
+                "default",
+                "compact",
+                "detailed",
+                "clickable",
+                "disabled",
+              ]}
+              defaultVariant="default"
+              label="UserProfile Variant:"
+              onVariantChange={(variant) => {
+                setUserProfileVariant(
+                  variant as
+                    | "default"
+                    | "compact"
+                    | "detailed"
+                    | "clickable"
+                    | "disabled"
+                );
+                console.log(`UserProfile variant changed to: ${variant}`);
+              }}
+            >
+              <UserProfile
+                name="John Doe"
+                email="john.doe@example.com"
+                avatarSrc="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+                variant={
+                  userProfileVariant === "compact"
+                    ? "compact"
+                    : userProfileVariant === "detailed"
+                    ? "detailed"
+                    : "default"
+                }
+                clickable={userProfileVariant === "clickable"}
+                disabled={userProfileVariant === "disabled"}
+                onClick={() => console.log("UserProfile clicked")}
+              />
+            </VariantSelector>
+          </GridCol>
           <GridCol span={span}>
             <VariantSelector
               title="PinInput Component"
@@ -1373,6 +1620,166 @@ export function ComponentsPage() {
               />
             </VariantSelector>
           </GridCol>
+
+          <GridCol span={span}>
+            <VariantSelector
+              title="LeftDrawer Component"
+              variants={["default"]}
+              defaultVariant="default"
+              label="LeftDrawer Demo:"
+              onVariantChange={() => {}}
+            >
+              <>
+                <div
+                  style={{ display: "flex", gap: "16px", alignItems: "center" }}
+                >
+                  <Button
+                    variant="filled"
+                    onClick={() => {
+                      console.log("Opening LeftDrawer");
+                      setIsLeftDrawerOpen(true);
+                    }}
+                  >
+                    Open Menu
+                  </Button>
+                  <Text variant="sm" color="secondary">
+                    Click to open the drawer with menu items
+                  </Text>
+                </div>
+
+                <LeftDrawer
+                  isOpen={isLeftDrawerOpen}
+                  onClose={() => {
+                    console.log("Closing LeftDrawer");
+                    setIsLeftDrawerOpen(false);
+                  }}
+                  items={menuItems}
+                  title="MY MENU"
+                  showOverlay={true}
+                  width="280px"
+                />
+              </>
+            </VariantSelector>
+          </GridCol>
+
+          <GridCol span={span}>
+            <VariantSelector
+              title="MetricCard Component"
+              variants={["default", "clickable", "negative-trend", "no-trend"]}
+              defaultVariant="default"
+              label="MetricCard Variant:"
+              onVariantChange={(variant) => {
+                setMetricCardVariant(
+                  variant as
+                    | "default"
+                    | "clickable"
+                    | "negative-trend"
+                    | "no-trend"
+                );
+                console.log(`MetricCard variant changed to: ${variant}`);
+              }}
+            >
+              <MetricCard
+                title={
+                  metricCardVariant === "negative-trend"
+                    ? "Revenue"
+                    : metricCardVariant === "no-trend"
+                    ? "Page Views"
+                    : "Total Users"
+                }
+                value={
+                  metricCardVariant === "negative-trend"
+                    ? "$12,450"
+                    : metricCardVariant === "no-trend"
+                    ? "1.2M"
+                    : "40,689"
+                }
+                trend={
+                  metricCardVariant === "negative-trend"
+                    ? -2.3
+                    : metricCardVariant === "no-trend"
+                    ? undefined
+                    : 8.5
+                }
+                trendLabel={
+                  metricCardVariant === "negative-trend"
+                    ? "Down from last month"
+                    : metricCardVariant === "no-trend"
+                    ? undefined
+                    : "Up from yesterday"
+                }
+                trendPositive={
+                  metricCardVariant === "negative-trend" ? false : true
+                }
+                icon={
+                  metricCardVariant === "negative-trend"
+                    ? Payment
+                    : metricCardVariant === "no-trend"
+                    ? Visibility
+                    : Person
+                }
+                iconVariant={
+                  metricCardVariant === "negative-trend"
+                    ? "success"
+                    : metricCardVariant === "no-trend"
+                    ? "info"
+                    : "primary"
+                }
+                clickable={metricCardVariant === "clickable"}
+                onClick={() => console.log("MetricCard clicked")}
+              />
+            </VariantSelector>
+          </GridCol>
+
+          <GridCol span={span}>
+            <VariantSelector
+              title="NewPatientDashboard Component"
+              variants={["default", "custom-data", "negative-trend"]}
+              defaultVariant="default"
+              label="Dashboard Variant:"
+              onVariantChange={(variant) => {
+                setNewPatientVariant(
+                  variant as "default" | "custom-data" | "negative-trend"
+                );
+                console.log(
+                  `NewPatientDashboard variant changed to: ${variant}`
+                );
+              }}
+            >
+              <NewPatientDashboard
+                title="New Patient"
+                trendPercentage={
+                  newPatientVariant === "negative-trend" ? -8.5 : 14.21
+                }
+                trendLabel={
+                  newPatientVariant === "negative-trend"
+                    ? "Lower than last month"
+                    : "High than last month"
+                }
+                trendPositive={newPatientVariant !== "negative-trend"}
+                chartData={
+                  newPatientVariant === "custom-data"
+                    ? [
+                        { year: "2020", purple: 200, orange: 120, red: 180 },
+                        { year: "2021", purple: 180, orange: 100, red: 160 },
+                        { year: "2022", purple: 220, orange: 140, red: 200 },
+                        { year: "2023", purple: 250, orange: 160, red: 220 },
+                      ]
+                    : undefined
+                }
+                overallValue={
+                  newPatientVariant === "custom-data" ? "82.3%" : "76.5%"
+                }
+                monthlyValue={
+                  newPatientVariant === "custom-data" ? "78.9%" : "76.5%"
+                }
+                dailyValue={
+                  newPatientVariant === "custom-data" ? "85.1%" : "76.5%"
+                }
+              />
+            </VariantSelector>
+          </GridCol>
+
           <GridCol span={span}>
             <VariantSelector
               title="Carousel Component"
@@ -1641,7 +2048,7 @@ export function ComponentsPage() {
         <Grid gutter="24px">
           <GridCol span={span}>
             <VariantSelector
-              title="Calendar Component"
+              title="Calendar Component (Date Range)"
               variants={["month", "year", "decade"]}
               defaultVariant="month"
               label="Select Calendar View:"
@@ -1675,10 +2082,13 @@ export function ComponentsPage() {
                 >
                   <Calendar
                     view={calendarView}
-                    selectedDate={selectedDate}
-                    onDateSelect={(date) => {
-                      setSelectedDate(date);
-                      console.log("Date selected:", date);
+                    rangeStart={rangeStart || undefined}
+                    rangeEnd={rangeEnd || undefined}
+                    rangeSelection={true}
+                    onRangeSelect={(startDate, endDate) => {
+                      setRangeStart(startDate);
+                      setRangeEnd(endDate);
+                      console.log("Range selected:", { startDate, endDate });
                     }}
                     onViewChange={(view) => {
                       setCalendarView(view);
@@ -1691,6 +2101,71 @@ export function ComponentsPage() {
                     sx={{
                       margin: "0 auto",
                       maxWidth: "280px",
+                      width: "100%",
+                    }}
+                  />
+                </div>
+              </div>
+            </VariantSelector>
+          </GridCol>
+          <GridCol span={span}>
+            <VariantSelector
+              title="Date Range Picker Component"
+              variants={["sm", "md", "lg", "xl"]}
+              defaultVariant="md"
+              label="Select Date Range Picker Size:"
+              onVariantChange={(variant) => {
+                console.log(`Date Range Picker size changed to: ${variant}`);
+              }}
+            >
+              <div
+                style={{
+                  padding: "12px",
+                  border: "1px solid var(--color-border-secondary)",
+                  borderRadius: "var(--radius-md)",
+                  backgroundColor: "var(--color-surface)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                  width: "100%",
+                  minHeight: "120px",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    maxWidth: "400px",
+                    width: "100%",
+                  }}
+                >
+                  <DateRangePicker
+                    label="Date Label"
+                    required={true}
+                    startDate={dateRangeStart}
+                    endDate={dateRangeEnd}
+                    startPlaceholder="Start date"
+                    endPlaceholder="End date"
+                    onStartDateChange={(date: string) => {
+                      setDateRangeStart(date);
+                      console.log("Start date changed:", date);
+                    }}
+                    onEndDateChange={(date: string) => {
+                      setDateRangeEnd(date);
+                      console.log("End date changed:", date);
+                    }}
+                    onRangeChange={(startDate: string, endDate: string) => {
+                      console.log("Date range changed:", {
+                        startDate,
+                        endDate,
+                      });
+                    }}
+                    size={isMobile ? "sm" : "md"}
+                    sx={{
+                      margin: "0 auto",
+                      maxWidth: "400px",
                       width: "100%",
                     }}
                   />

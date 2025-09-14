@@ -4,7 +4,6 @@ import styles from "./Radio.module.scss";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
 
-
 export interface RadioProps extends WithSxProps {
   /** Radio button label text */
   label?: string;
@@ -52,7 +51,6 @@ export const Radio: React.FC<RadioProps> = ({
   sx,
   style,
 }) => {
-  
   const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
     sx,
     style,
@@ -90,7 +88,6 @@ export const Radio: React.FC<RadioProps> = ({
         name={name}
         value={value}
         className={styles.input}
-        
       />
       <span className={styles.radioButton}>
         <span className={styles.radioDot} />

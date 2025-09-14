@@ -46,13 +46,13 @@
   color: var(--color-input-text);
 
   &:hover:not(.disabled) {
-    border-color: var(--color-border-primary);
+    border-color: var(--color-input-border-focus);
     transition: none;
   }
 
   &:focus {
     border-color: var(--color-input-border-focus);
-    box-shadow: 0 0 0 var(--border-width-normal) var(--color-border-focus);
+    box-shadow: 0 0 0 var(--border-width-thin) var(--color-border-focus);
     transition: none;
   }
 
@@ -61,7 +61,7 @@
 
     &:focus {
       border-color: var(--color-error);
-      box-shadow: 0 0 0 var(--border-width-normal) var(--color-error);
+      box-shadow: 0 0 0 var(--border-width-thin) var(--color-error);
       transition: none;
     }
   }
@@ -80,7 +80,7 @@
   &:focus {
     background-color: var(--color-input-background);
     border-color: var(--color-input-border-focus);
-    box-shadow: 0 0 0 var(--border-width-normal) var(--color-input-border-focus);
+    box-shadow: none;
     transition: none;
   }
 
@@ -166,13 +166,13 @@
   // Apply focus styles when state is set to "focus"
   &.variant-default {
     border-color: var(--color-input-border-focus);
-    box-shadow: 0 0 0 2px var(--color-input-border-focus);
+    box-shadow: none;
   }
 
   &.variant-filled {
     background-color: var(--color-input-background);
     border-color: var(--color-input-border-focus);
-    box-shadow: 0 0 0 2px var(--color-input-border-focus);
+    box-shadow: none;
   }
 
   &.variant-unstyled {
@@ -452,7 +452,7 @@
 .error {
   .leftIcon,
   .rightIcon {
-    color: var(--color-error);
+    color: var(--color-icon-error);
   }
 }
 

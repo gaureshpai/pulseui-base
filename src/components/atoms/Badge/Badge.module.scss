@@ -6,7 +6,8 @@
   justify-content: center;
   gap: var(--spacing-xs);
   font-family: var(--font-family);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
   border-radius: var(--radius-full);
   transition: var(--motion-transition-fast);
   cursor: default;
@@ -103,7 +104,8 @@
 .variant-dot {
   background-color: var(--color-badge-primary, var(--color-blue-8));
   color: var(--color-white);
-  border: var(--border-width-thin) solid var(--color-badge-primary, var(--color-blue-8));
+  border: var(--border-width-thin) solid
+    var(--color-badge-primary, var(--color-blue-8));
 
   &:hover:not(.disabled) {
     background-color: var(--color-badge-primary-hover, var(--color-blue-9));
@@ -125,7 +127,8 @@
 .variant-filled {
   background-color: var(--color-badge-primary, var(--color-blue-8));
   color: var(--color-white);
-  border: var(--border-width-thin) solid var(--color-badge-primary, var(--color-blue-8));
+  border: var(--border-width-thin) solid
+    var(--color-badge-primary, var(--color-blue-8));
 
   &:hover:not(.disabled) {
     background-color: var(--color-badge-primary-hover, var(--color-blue-9));
@@ -248,6 +251,8 @@
   text-overflow: ellipsis;
   line-height: inherit;
   align-self: center;
+  font-weight: inherit;
+  text-transform: inherit;
 }
 
 // Icon styles

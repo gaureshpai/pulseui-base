@@ -1,0 +1,119 @@
+@use "../../../styles/_tokens.scss" as *;
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+  line-height: 1.4;
+}
+
+.trendIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-sm);
+  transition: var(--motion-transition-normal);
+
+  &:focus-within {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+.trendIcon {
+  color: #059669 !important; /* Direct green color */
+  flex-shrink: 0;
+}
+
+.trendText {
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+  color: #059669 !important; /* Direct green color */
+  font-family: var(--font-family);
+  font-size: var(--font-size-md);
+  line-height: 1.4;
+}
+
+.trendPositive {
+  color: #059669 !important; /* Direct green color */
+}
+
+.trendNegative {
+  color: var(--metric-brand-e); /* Red for negative trend */
+}
+
+.chartContainer {
+  flex: 1;
+  min-height: 300px;
+}
+
+.footerMetrics {
+  display: flex;
+  justify-content: space-around;
+  padding-top: var(--spacing-md);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.metricLabel {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
+.metricValue {
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size-lg);
+  line-height: 1.4;
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+  }
+
+  .chartContainer {
+    min-height: 250px;
+  }
+
+  .footerMetrics {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .footerMetrics {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+}

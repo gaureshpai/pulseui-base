@@ -59,7 +59,9 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
       onChange?.(newChecked);
     };
 
-    const switchId = id || `switch-${Math.random().toString(36).substr(2, 9)}`;
+    // Generate unique IDs for accessibility
+    const generatedId = React.useId();
+    const switchId = id || generatedId;
     const errorId = error ? `${switchId}-error` : undefined;
 
     const containerClasses = combineClassNames(

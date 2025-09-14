@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import styles from "./Modal.module.scss";
 import { ModalFooter } from "./ModalFooter";
 import { Icon } from "../Icon";
@@ -6,7 +6,6 @@ import { Close } from "../Icon/IconSet";
 // import type { SxProps } from "../../../styles/stylesApi";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
-
 
 export interface ModalProps extends WithSxProps {
   /** Modal content */
@@ -82,8 +81,8 @@ export const Modal: React.FC<ModalProps> = ({
   sx,
   style,
 }) => {
-  
   const modalRef = useRef<HTMLDivElement>(null);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
 
   const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
     sx,
@@ -121,23 +120,88 @@ export const Modal: React.FC<ModalProps> = ({
     }
   };
 
+  // Focus trap functionality
+  const getFocusableElements = useCallback(() => {
+    if (!modalRef.current) return [];
+
+    const focusableSelectors = [
+      "button:not([disabled])",
+      "input:not([disabled])",
+      "select:not([disabled])",
+      "textarea:not([disabled])",
+      "a[href]",
+      '[tabindex]:not([tabindex="-1"])',
+      '[contenteditable="true"]',
+    ].join(", ");
+
+    return Array.from(
+      modalRef.current.querySelectorAll(focusableSelectors)
+    ) as HTMLElement[];
+  }, []);
+
+  const trapFocus = useCallback(
+    (e: KeyboardEvent) => {
+      if (!show || !modalRef.current) return;
+
+      const focusableElements = getFocusableElements();
+      if (focusableElements.length === 0) return;
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.key === "Tab") {
+        if (e.shiftKey) {
+          // Shift + Tab
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          // Tab
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
+      }
+    },
+    [show, getFocusableElements]
+  );
+
   useEffect(() => {
     if (show) {
+      // Store the previously focused element
+      previousActiveElement.current = document.activeElement as HTMLElement;
+
+      // Prevent body scroll
       document.body.style.overflow = "hidden";
+
+      // Add focus trap event listener
+      document.addEventListener("keydown", trapFocus);
+
+      // Focus the modal
+      if (modalRef.current) {
+        modalRef.current.focus();
+      }
     } else {
+      // Restore body scroll
       document.body.style.overflow = "unset";
+
+      // Remove focus trap event listener
+      document.removeEventListener("keydown", trapFocus);
+
+      // Restore focus to previously focused element
+      if (previousActiveElement.current) {
+        previousActiveElement.current.focus();
+        previousActiveElement.current = null;
+      }
     }
 
     return () => {
       document.body.style.overflow = "unset";
+      document.removeEventListener("keydown", trapFocus);
     };
-  }, [show]);
-
-  useEffect(() => {
-    if (show && modalRef.current) {
-      modalRef.current.focus();
-    }
-  }, [show]);
+  }, [show, trapFocus]);
 
   if (!show) return null;
 
@@ -159,7 +223,6 @@ export const Modal: React.FC<ModalProps> = ({
         tabIndex={-1}
         role="dialog"
         aria-modal="true"
-        
       >
         {/* Header */}
         {(showTitle && title) || showClose ? (

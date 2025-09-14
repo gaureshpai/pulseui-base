@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "./index";
 import { HomePage, ComponentsPage } from "./pages";
+import Dashboard from "./components/pages/Dashboard";
 import type { SimpleTopNavItem } from "./components/atoms/SimpleTopNav/SimpleTopNav";
 
 function AppContent() {
@@ -38,7 +39,7 @@ function AppContent() {
     },
     {
       id: "docs",
-      label: "Documentation",
+      label: "Multibrand Demo",
       active: currentPage === "docs",
       onClick: () => setCurrentPage("docs"),
     },
@@ -59,9 +60,192 @@ function AppContent() {
         return <ComponentsPage />;
       case "docs":
         return (
-          <div style={{ textAlign: "center", padding: "64px 16px" }}>
-            <h1>Documentation</h1>
-            <p>Documentation page coming soon...</p>
+          <div style={{ padding: "32px 16px" }}>
+            <div style={{ textAlign: "center", marginBottom: "48px" }}>
+              <h1>Multibrand Demo</h1>
+              <p>Explore different brand layouts and configurations</p>
+            </div>
+
+            <div
+              style={{
+                maxWidth: "1200px",
+                margin: "0 auto",
+                backgroundColor: "var(--color-surface)",
+                border: "1px solid var(--color-border-secondary)",
+                borderRadius: "var(--radius-lg)",
+                padding: "32px",
+                boxShadow: "var(--shadow-lg)",
+              }}
+            >
+              <h2
+                style={{
+                  marginBottom: "24px",
+                  color: "var(--color-text-primary)",
+                }}
+              >
+                Layout Components
+              </h2>
+              <p
+                style={{
+                  color: "var(--color-text-secondary)",
+                  marginBottom: "32px",
+                  lineHeight: "1.6",
+                }}
+              >
+                This section will showcase different layout components and their
+                configurations across various brand themes. You can switch
+                between different brands using the brand switcher in the top
+                navigation.
+              </p>
+
+              <div
+                style={{
+                  marginBottom: "32px",
+                  backgroundColor: "var(--color-surface-secondary)",
+                  borderRadius: "var(--radius-md)",
+                  border: "1px solid var(--color-border-primary)",
+                  overflow: "hidden",
+                  height: "900px",
+                }}
+              >
+                <div
+                  style={{
+                    padding: "16px 24px",
+                    backgroundColor: "var(--color-surface-tertiary)",
+                    borderBottom: "1px solid var(--color-border-primary)",
+                  }}
+                >
+                  <h3
+                    style={{
+                      margin: 0,
+                      color: "var(--color-text-primary)",
+                      fontSize: "16px",
+                      fontWeight: "var(--font-weight-semibold)",
+                    }}
+                  >
+                    Dashboard Preview
+                  </h3>
+                </div>
+                <div
+                  style={{ height: "calc(100% - 60px)", overflow: "visible" }}
+                >
+                  <Dashboard />
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+                  gap: "24px",
+                  marginTop: "32px",
+                }}
+              >
+                <div
+                  style={{
+                    padding: "24px",
+                    backgroundColor: "var(--color-surface-secondary)",
+                    borderRadius: "var(--radius-md)",
+                    border: "1px solid var(--color-border-primary)",
+                  }}
+                >
+                  <h3
+                    style={{
+                      marginBottom: "16px",
+                      color: "var(--color-text-primary)",
+                    }}
+                  >
+                    Container Layout
+                  </h3>
+                  <p
+                    style={{
+                      color: "var(--color-text-secondary)",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Responsive container with proper spacing and constraints
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    padding: "24px",
+                    backgroundColor: "var(--color-surface-secondary)",
+                    borderRadius: "var(--radius-md)",
+                    border: "1px solid var(--color-border-primary)",
+                  }}
+                >
+                  <h3
+                    style={{
+                      marginBottom: "16px",
+                      color: "var(--color-text-primary)",
+                    }}
+                  >
+                    Grid System
+                  </h3>
+                  <p
+                    style={{
+                      color: "var(--color-text-secondary)",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Flexible grid layout with responsive columns
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    padding: "24px",
+                    backgroundColor: "var(--color-surface-secondary)",
+                    borderRadius: "var(--radius-md)",
+                    border: "1px solid var(--color-border-primary)",
+                  }}
+                >
+                  <h3
+                    style={{
+                      marginBottom: "16px",
+                      color: "var(--color-text-primary)",
+                    }}
+                  >
+                    Stack Layout
+                  </h3>
+                  <p
+                    style={{
+                      color: "var(--color-text-secondary)",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Vertical and horizontal stacking components
+                  </p>
+                </div>
+
+                <div
+                  style={{
+                    padding: "24px",
+                    backgroundColor: "var(--color-surface-secondary)",
+                    borderRadius: "var(--radius-md)",
+                    border: "1px solid var(--color-border-primary)",
+                  }}
+                >
+                  <h3
+                    style={{
+                      marginBottom: "16px",
+                      color: "var(--color-text-primary)",
+                    }}
+                  >
+                    Group Layout
+                  </h3>
+                  <p
+                    style={{
+                      color: "var(--color-text-secondary)",
+                      fontSize: "14px",
+                    }}
+                  >
+                    Grouped components with consistent spacing
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         );
       case "contact":

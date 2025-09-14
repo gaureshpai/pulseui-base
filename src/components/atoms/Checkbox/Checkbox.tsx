@@ -1,4 +1,5 @@
 import React, { forwardRef } from "react";
+import ErrorOutlineRoundedIcon from "@mui/icons-material/ErrorOutlineRounded";
 import { Icon } from "../Icon";
 import { Check } from "../Icon/IconSet";
 import styles from "./Checkbox.module.scss";
@@ -67,14 +68,12 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       onChange?.(newChecked);
     };
 
-    const checkboxId =
-      id || `checkbox-${Math.random().toString(36).substr(2, 9)}`;
+    // Generate unique IDs for accessibility
+    const generatedId = React.useId();
+    const checkboxId = id || generatedId;
     const errorId = error ? `${checkboxId}-error` : undefined;
 
-    const containerClasses = combineClassNames(
-      styles.checkboxContainer,
-      sxClassName
-    );
+    const containerClasses = combineClassNames(sxClassName);
 
     React.useEffect(() => {
       if (inputRef.current) {
@@ -155,6 +154,16 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
             `}
             role="alert"
           >
+            <span
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "var(--spacing-xs)",
+                color: "var(--color-icon-error)",
+              }}
+            >
+              <ErrorOutlineRoundedIcon fontSize="small" />
+            </span>
             {error}
           </div>
         )}

@@ -35,6 +35,12 @@ export type { RadioProps } from "./components/atoms/Radio";
 export { Switch } from "./components/atoms/Switch";
 export type { SwitchProps } from "./components/atoms/Switch";
 
+export { Spinner } from "./components/atoms/Spinner";
+export type { SpinnerProps } from "./components/atoms/Spinner";
+
+export { Toggle } from "./components/atoms/Toggle";
+export type { ToggleProps, ToggleOption } from "./components/atoms/Toggle";
+
 export { Select } from "./components/atoms/Select";
 export type { SelectProps } from "./components/atoms/Select";
 
@@ -69,11 +75,16 @@ export type {
   VersionSelectorProps,
 } from "./components/atoms/SimpleTopNav";
 
+export { MetricCard } from "./components/atoms/MetricCard";
+export type { MetricCardProps } from "./components/atoms/MetricCard";
+
+export { NewPatientDashboard } from "./components/atoms/NewPatientDashboard";
+export type { NewPatientDashboardProps } from "./components/atoms/NewPatientDashboard";
+
 export { LeftDrawer } from "./components/atoms/LeftDrawer";
 export type {
   LeftDrawerProps,
   LeftDrawerItem,
-  LeftDrawerSection,
 } from "./components/atoms/LeftDrawer";
 
 export { Drawer } from "./components/atoms/Drawer";
@@ -140,6 +151,9 @@ export type {
   FileUploadProps,
   UploadFile,
 } from "./components/atoms/FileUpload";
+
+export { UserProfile } from "./components/atoms/UserProfile";
+export type { UserProfileProps } from "./components/atoms/UserProfile";
 
 export { ProfileCard } from "./components/atoms/ProfileCard";
 export type { ProfileCardProps } from "./components/atoms/ProfileCard";
@@ -261,6 +275,9 @@ export type { CalendarYearProps } from "./components/atoms/Calendar/CalendarYear
 
 export { CalendarDecade } from "./components/atoms/Calendar/CalendarDecade/CalendarDecade";
 export type { CalendarDecadeProps } from "./components/atoms/Calendar/CalendarDecade/CalendarDecade";
+
+export { DateRangePicker } from "./components/atoms/DateRangePicker";
+export type { DateRangePickerProps } from "./components/atoms/DateRangePicker";
 
 // DatePicker Component
 export { DatePicker } from "./components/atoms/DatePicker";

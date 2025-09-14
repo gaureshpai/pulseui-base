@@ -1,25 +1,6 @@
 @use "../../../styles/_tokens.scss" as *;
 
-.checkboxContainer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--spacing-sm);
-  align-items: flex-start;
-  font-family: var(--font-family);
-  flex-wrap: wrap;
-  width: 100%;
-  padding: var(--spacing-xs);
-  border-radius: var(--radius-sm);
-  transition: background-color var(--motion-transition-normal) ease;
-
-  &:hover {
-    background-color: var(
-      --color-surface-hover,
-      var(--color-surface-secondary)
-    );
-  }
-}
+/* Removed container to avoid background/hover behind checkbox */
 
 .checkboxLabelGroup {
   display: flex;
@@ -83,9 +64,10 @@
 
   &.disabled {
     cursor: not-allowed;
-    opacity: var(--opacity-50);
     transform: scale(1);
     transition: opacity var(--motion-transition-normal) ease;
+    background-color: var(--color-surface-4);
+    border-color: var(--color-border-secondary);
   }
 
   &.error {
@@ -126,6 +108,29 @@
     // Icon animation when checked
     svg {
       animation: iconPop 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
+
+  // Ensure disabled takes precedence even when checked
+  &.checked.disabled {
+    background-color: var(--color-surface-4);
+    border-color: var(--color-border-secondary);
+  }
+
+  // Ensure error border takes precedence even when checked
+  &.checked.error {
+    border-color: var(--color-error);
+    background-color: var(--color-surface);
+
+    // Hide check icon to visually force unchecked state
+    svg {
+      transform: scale(0);
+      opacity: 0;
+    }
+
+    &:hover:not(.disabled) {
+      border-color: var(--color-error);
+      background-color: var(--color-surface-secondary);
     }
   }
 
@@ -182,6 +187,7 @@
   &.disabled {
     cursor: not-allowed;
     color: var(--color-text-disabled);
+    opacity: 1;
   }
 
   // Size variants
@@ -211,6 +217,11 @@
   color: var(--color-error);
   font-size: var(--font-size-sm);
   line-height: 1.4;
+  flex-basis: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
 
   // Size variants
   &.size-sm {

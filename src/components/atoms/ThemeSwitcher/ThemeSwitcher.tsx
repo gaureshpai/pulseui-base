@@ -7,14 +7,14 @@ export interface ThemeSwitcherProps extends WithSxProps {
   /** Size of the theme switcher */
   size?: "sm" | "md" | "lg";
   /** Variant style */
-  variant?: "light" | "dark" | "default";
+  variant?: "subtle" | "light" | "dark" | "default";
   /** Custom label for accessibility */
   label?: string;
 }
 
 export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
   size = "md",
-  variant = "default",
+  variant = "subtle",
   label,
   className = "",
   style,
@@ -66,7 +66,13 @@ export const ThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
 
   // Map variant to ActionButton variant
   const actionButtonVariant =
-    variant === "default" ? "filled" : variant === "light" ? "light" : "filled";
+    variant === "subtle"
+      ? "subtle"
+      : variant === "light"
+      ? "light"
+      : variant === "default"
+      ? "subtle"
+      : "subtle";
 
   return (
     <ActionButton

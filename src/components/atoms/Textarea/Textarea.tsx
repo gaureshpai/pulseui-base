@@ -2,7 +2,8 @@ import React from "react";
 import styles from "./Textarea.module.scss";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
-
+import { Icon } from "../Icon/Icon";
+import { ErrorOutline } from "../Icon/IconSet";
 
 export interface TextareaProps extends WithSxProps {
   /** Textarea label */
@@ -33,6 +34,12 @@ export interface TextareaProps extends WithSxProps {
   onFocus?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
   /** Callback fired when textarea loses focus */
   onBlur?: (event: React.FocusEvent<HTMLTextAreaElement>) => void;
+  /** Accessibility label (overrides label for screen readers) */
+  ariaLabel?: string;
+  /** Describes the textarea's purpose */
+  ariaDescribedBy?: string;
+  /** Tab index for keyboard navigation */
+  tabIndex?: number;
 }
 
 export const Textarea: React.FC<TextareaProps> = ({
@@ -50,13 +57,21 @@ export const Textarea: React.FC<TextareaProps> = ({
   onChange,
   onFocus,
   onBlur,
+  ariaLabel,
+  ariaDescribedBy,
+  tabIndex,
   className = "",
   sx,
   style,
 }) => {
-  
-  const textareaId =
-    id || name || `textarea-${Math.random().toString(36).substr(2, 9)}`;
+  // Generate unique IDs for accessibility
+  const generatedId = React.useId();
+  const textareaId = id || name || generatedId;
+  const captionId = caption ? `${textareaId}-caption` : undefined;
+  const errorId = error ? `${textareaId}-error` : undefined;
+  const describedBy = [ariaDescribedBy, captionId, errorId]
+    .filter(Boolean)
+    .join(" ");
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (onChange) {
@@ -99,23 +114,44 @@ export const Textarea: React.FC<TextareaProps> = ({
         value={value}
         placeholder={placeholder}
         disabled={disabled}
+        required={required}
         rows={rows}
         onChange={handleChange}
         onFocus={onFocus}
         onBlur={onBlur}
+        tabIndex={tabIndex}
         className={textareaClasses}
-        
+        aria-label={ariaLabel}
+        aria-describedby={describedBy || undefined}
+        aria-invalid={!!error}
+        aria-required={required}
       />
 
       {caption && (
         <div className={styles.footer}>
-          <span className={styles.caption}>{caption}</span>
+          <span id={captionId} className={styles.caption}>
+            {caption}
+          </span>
         </div>
       )}
 
       {error && (
         <div className={styles.footer}>
-          <span className={styles.error}>{error}</span>
+          <Icon
+            icon={ErrorOutline}
+            size="sm"
+            color="error"
+            className={styles.errorIcon}
+            aria-hidden="true"
+          />
+          <span
+            id={errorId}
+            className={styles.error}
+            role="alert"
+            aria-live="polite"
+          >
+            {error}
+          </span>
         </div>
       )}
     </div>

@@ -286,7 +286,7 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
                 {navItems.map((item) => renderNavItem(item))}
                 {showThemeSwitcher && (
                   <div className={styles.themeSwitcherContainer}>
-                    <ThemeSwitcher size="sm" variant="light" />
+                    <ThemeSwitcher size="sm" variant="subtle" />
                   </div>
                 )}
               </div>
@@ -298,7 +298,7 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
                 {/* Hide theme switcher on mobile */}
                 {showThemeSwitcher && !isMobile && (
                   <div className={styles.themeSwitcherContainer}>
-                    <ThemeSwitcher size="sm" variant="light" />
+                    <ThemeSwitcher size="sm" variant="subtle" />
                   </div>
                 )}
                 <button
@@ -338,7 +338,7 @@ export const SimpleTopNav: React.FC<SimpleTopNavProps> = ({
                 {/* Show theme switcher in mobile menu header */}
                 {showThemeSwitcher && (
                   <div className={styles.mobileThemeSwitcher}>
-                    <ThemeSwitcher size="sm" variant="light" />
+                    <ThemeSwitcher size="sm" variant="subtle" />
                   </div>
                 )}
                 {/* Custom mobile header content */}

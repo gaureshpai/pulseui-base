@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Preview</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background-color: #f8f9fa;
+        color: #212529;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+      }
+
+      .top-nav {
+        background-color: #ffffff;
+        border-bottom: 1px solid #e9ecef;
+        padding: 0 24px;
+        height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .nav-logo {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+      }
+
+      .nav-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+
+      .nav-menu {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .nav-item {
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+      }
+
+      .nav-item:hover {
+        color: #007bff;
+        background-color: #f8f9fa;
+      }
+
+      .nav-item.active {
+        color: #007bff;
+        background-color: #e3f2fd;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .nav-button {
+        background: none;
+        border: 1px solid #e9ecef;
+        color: #6c757d;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .nav-button:hover {
+        background-color: #f8f9fa;
+        border-color: #007bff;
+        color: #007bff;
+      }
+
+      .nav-button.primary {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      .nav-button.primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+
+      .dashboard {
+        padding: 24px;
+        min-height: calc(100vh - 64px);
+      }
+
+      .dashboard-header {
+        margin-bottom: 32px;
+      }
+
+      .dashboard-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 8px;
+      }
+
+      .dashboard-subtitle {
+        color: #6c757d;
+        font-size: 16px;
+      }
+
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        margin-bottom: 32px;
+      }
+
+      .dashboard-card {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e9ecef;
+      }
+
+      .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1a1a1a;
+        margin-bottom: 16px;
+      }
+
+      .card-content {
+        color: #6c757d;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      .metric-card {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e9ecef;
+        text-align: center;
+      }
+
+      .metric-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #007bff;
+        margin-bottom: 8px;
+      }
+
+      .metric-label {
+        color: #6c757d;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .chart-placeholder {
+        height: 200px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #6c757d;
+        font-size: 16px;
+        border: 2px dashed #dee2e6;
+      }
+
+      .table-container {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e9ecef;
+      }
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .table th,
+      .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+        color: #495057;
+      }
+
+      .table td {
+        color: #6c757d;
+      }
+
+      .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .status-active {
+        background-color: #d4edda;
+        color: #155724;
+      }
+
+      .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+
+      .status-inactive {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+
+      @media (max-width: 768px) {
+        .top-nav {
+          padding: 0 16px;
+          height: 56px;
+        }
+
+        .nav-menu {
+          display: none;
+        }
+
+        .nav-title {
+          font-size: 16px;
+        }
+
+        .nav-actions {
+          gap: 8px;
+        }
+
+        .nav-button {
+          padding: 6px 12px;
+          font-size: 12px;
+        }
+
+        .dashboard {
+          padding: 16px;
+        }
+
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .metrics-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="top-nav">
+      <div class="nav-brand">
+        <div class="nav-logo">P</div>
+        <div class="nav-title">PulseUI Dashboard</div>
+      </div>
+
+      <div class="nav-menu">
+        <a href="#" class="nav-item active">Dashboard</a>
+        <a href="#" class="nav-item">Analytics</a>
+        <a href="#" class="nav-item">Users</a>
+        <a href="#" class="nav-item">Settings</a>
+      </div>
+
+      <div class="nav-actions">
+        <button class="nav-button">Notifications</button>
+        <button class="nav-button primary">New Report</button>
+      </div>
+    </nav>
+
+    <div class="dashboard">
+      <div class="dashboard-header">
+        <h1 class="dashboard-title">Analytics Dashboard</h1>
+        <p class="dashboard-subtitle">
+          Real-time insights and performance metrics
+        </p>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">1,234</div>
+          <div class="metric-label">Total Users</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">5,678</div>
+          <div class="metric-label">Page Views</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">89%</div>
+          <div class="metric-label">Conversion Rate</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">$12,345</div>
+          <div class="metric-label">Revenue</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <h3 class="card-title">Traffic Overview</h3>
+          <div class="chart-placeholder">
+            📊 Chart visualization would go here
+          </div>
+        </div>
+        <div class="dashboard-card">
+          <h3 class="card-title">User Engagement</h3>
+          <div class="chart-placeholder">📈 Engagement metrics chart</div>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <h3 class="card-title">Recent Activity</h3>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>User</th>
+              <th>Action</th>
+              <th>Status</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>john.doe@example.com</td>
+              <td>Account Created</td>
+              <td><span class="status-badge status-active">Active</span></td>
+              <td>2 minutes ago</td>
+            </tr>
+            <tr>
+              <td>jane.smith@example.com</td>
+              <td>Profile Updated</td>
+              <td><span class="status-badge status-pending">Pending</span></td>
+              <td>5 minutes ago</td>
+            </tr>
+            <tr>
+              <td>mike.wilson@example.com</td>
+              <td>Subscription Cancelled</td>
+              <td>
+                <span class="status-badge status-inactive">Inactive</span>
+              </td>
+              <td>10 minutes ago</td>
+            </tr>
+            <tr>
+              <td>sarah.jones@example.com</td>
+              <td>Payment Processed</td>
+              <td><span class="status-badge status-active">Active</span></td>
+              <td>15 minutes ago</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

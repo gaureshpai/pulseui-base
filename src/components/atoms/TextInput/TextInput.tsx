@@ -7,7 +7,6 @@ import styles from "./TextInput.module.scss";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
 
-
 export interface TextInputProps extends WithSxProps {
   /** Input label */
   label?: string;
@@ -70,9 +69,12 @@ export const TextInput: React.FC<TextInputProps> = ({
   sx,
   style,
 }) => {
-  
-  const inputId =
-    id || name || `text-input-${Math.random().toString(36).substr(2, 9)}`;
+  // Generate unique IDs for accessibility
+  const generatedId = React.useId();
+  const inputId = id || name || generatedId;
+  const captionId = caption ? `${inputId}-caption` : undefined;
+  const errorId = error ? `${inputId}-error` : undefined;
+  const describedBy = [captionId, errorId].filter(Boolean).join(" ");
 
   const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
     sx,
@@ -103,6 +105,7 @@ export const TextInput: React.FC<TextInputProps> = ({
         value={value}
         placeholder={placeholder}
         disabled={disabled}
+        required={required}
         leftIcon={leftIcon}
         rightIcon={rightIcon}
         showPasswordToggle={showPasswordToggle}
@@ -112,20 +115,31 @@ export const TextInput: React.FC<TextInputProps> = ({
         onFocus={onFocus}
         onBlur={onBlur}
         className={styles.input}
+        aria-describedby={describedBy || undefined}
+        aria-invalid={!!error}
+        aria-required={required}
       />
 
       {(caption || error) && (
         <div className={styles.footer}>
           {caption && !error && (
-            <span className={styles.caption}>{caption}</span>
+            <span id={captionId} className={styles.caption}>
+              {caption}
+            </span>
           )}
           {error && (
-            <div className={styles.errorMessage}>
+            <div
+              id={errorId}
+              className={styles.errorMessage}
+              role="alert"
+              aria-live="polite"
+            >
               <Icon
                 icon={InfoOutlined}
                 size="sm"
                 color="error"
                 className={styles.errorIcon}
+                aria-hidden="true"
               />
               <span>{error}</span>
             </div>

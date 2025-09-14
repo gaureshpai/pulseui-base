@@ -1,35 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import { Icon } from "../Icon/Icon";
-import { Close, ExpandMore, ExpandLess } from "../Icon/IconSet";
+import { Close } from "../Icon/IconSet";
 import { useBreakpoint } from "../../../hooks/useBreakpoint";
 import styles from "./LeftDrawer.module.scss";
 import type { SvgIconComponent } from "@mui/icons-material";
 import type { WithSxProps } from "../../../utils/sxUtils";
 import { mergeSxWithStyles } from "../../../utils/sxUtils";
 
-
 export interface LeftDrawerItem {
   id: string;
   label: string;
   icon?: SvgIconComponent;
-  href?: string;
   onClick?: () => void;
-  children?: LeftDrawerItem[];
-}
-
-export interface LeftDrawerSection {
-  id: string;
-  title: string;
-  icon?: SvgIconComponent;
-  items: LeftDrawerItem[];
+  isAction?: boolean; // For special action items like "Add Bookmark"
 }
 
 export interface LeftDrawerProps extends WithSxProps {
   isOpen: boolean;
   onClose: () => void;
-  sections: LeftDrawerSection[];
-  brandName?: string;
-  brandLogo?: React.ReactNode;
+  items: LeftDrawerItem[];
+  title?: string;
   showOverlay?: boolean;
   width?: string;
 }
@@ -37,9 +27,8 @@ export interface LeftDrawerProps extends WithSxProps {
 export const LeftDrawer: React.FC<LeftDrawerProps> = ({
   isOpen,
   onClose,
-  sections,
-  brandName,
-  brandLogo,
+  items,
+  title = "MY MENU",
   showOverlay = true,
   width = "280px",
   className = "",
@@ -52,23 +41,10 @@ export const LeftDrawer: React.FC<LeftDrawerProps> = ({
     className
   );
 
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(
-    new Set()
-  );
   const { isMobile, isTablet } = useBreakpoint();
-  
-
-  const toggleSection = (sectionId: string) => {
-    const newExpanded = new Set(expandedSections);
-    if (newExpanded.has(sectionId)) {
-      newExpanded.delete(sectionId);
-    } else {
-      newExpanded.add(sectionId);
-    }
-    setExpandedSections(newExpanded);
-  };
 
   const handleItemClick = (item: LeftDrawerItem) => {
+    console.log("LeftDrawer item clicked:", item.label);
     if (item.onClick) {
       item.onClick();
     }
@@ -78,14 +54,12 @@ export const LeftDrawer: React.FC<LeftDrawerProps> = ({
     }
   };
 
-  const renderDrawerItem = (item: LeftDrawerItem, level: number = 0) => (
-    <div
-      key={item.id}
-      className={`${styles.drawerItem} ${styles[`level${level}`]}`}
-      style={{ paddingLeft: `${16 + level * 16}px` }}
-    >
+  const renderMenuItem = (item: LeftDrawerItem) => (
+    <div key={item.id} className={styles.menuItem}>
       <button
-        className={styles.itemButton}
+        className={`${styles.menuButton} ${
+          item.isAction ? styles.actionButton : ""
+        }`}
         onClick={() => handleItemClick(item)}
         type="button"
       >
@@ -93,72 +67,27 @@ export const LeftDrawer: React.FC<LeftDrawerProps> = ({
           <Icon
             icon={item.icon}
             size={isMobile ? "md" : "sm"}
-            color="inherit"
-            className={styles.itemIcon}
+            color={item.isAction ? "primary" : "inherit"}
+            className={styles.menuIcon}
           />
         )}
-        <span className={styles.itemLabel}>{item.label}</span>
+        <span
+          className={`${styles.menuLabel} ${
+            item.isAction ? styles.actionLabel : ""
+          }`}
+        >
+          {item.label}
+        </span>
       </button>
     </div>
   );
-
-  const renderDrawerSection = (section: LeftDrawerSection) => {
-    const isExpanded = expandedSections.has(section.id);
-    const hasChildren = section.items.some(
-      (item) => item.children && item.children.length > 0
-    );
-
-    return (
-      <div key={section.id} className={styles.drawerSection}>
-        <button
-          className={styles.sectionHeader}
-          onClick={() => toggleSection(section.id)}
-          type="button"
-          aria-expanded={isExpanded}
-        >
-          {section.icon && (
-            <Icon
-              icon={section.icon}
-              size="sm"
-              color="inherit"
-              className={styles.sectionIcon}
-            />
-          )}
-          <span className={styles.sectionTitle}>{section.title}</span>
-          {hasChildren && (
-            <Icon
-              icon={isExpanded ? ExpandLess : ExpandMore}
-              size="sm"
-              color="inherit"
-              className={styles.expandIcon}
-            />
-          )}
-        </button>
-
-        {isExpanded && (
-          <div className={styles.sectionContent}>
-            {section.items.map((item) => (
-              <div key={item.id}>
-                {renderDrawerItem(item)}
-                {item.children && item.children.length > 0 && (
-                  <div className={styles.nestedItems}>
-                    {item.children.map((child) => renderDrawerItem(child, 1))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  };
 
   return (
     <>
       {/* Overlay */}
       {showOverlay && isOpen && (
         <div
-          className={styles.overlay}
+          className={`${styles.overlay} ${isOpen ? styles.visible : ""}`}
           onClick={onClose}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
@@ -179,14 +108,10 @@ export const LeftDrawer: React.FC<LeftDrawerProps> = ({
         role="dialog"
         aria-modal="true"
         aria-label="Navigation drawer"
-        
       >
         {/* Header */}
         <div className={styles.drawerHeader}>
-          <div className={styles.brandSection}>
-            {brandLogo && <div className={styles.brandLogo}>{brandLogo}</div>}
-            {brandName && <h2 className={styles.brandName}>{brandName}</h2>}
-          </div>
+          <h2 className={styles.menuTitle}>{title}</h2>
           <button
             className={styles.closeButton}
             onClick={onClose}
@@ -197,10 +122,8 @@ export const LeftDrawer: React.FC<LeftDrawerProps> = ({
           </button>
         </div>
 
-        {/* Navigation Sections */}
-        <nav className={styles.drawerNavigation}>
-          {sections.map(renderDrawerSection)}
-        </nav>
+        {/* Menu Items */}
+        <nav className={styles.menuNavigation}>{items.map(renderMenuItem)}</nav>
       </div>
     </>
   );

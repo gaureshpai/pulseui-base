@@ -561,9 +561,60 @@ async function main() {
     // Process Figma tokens
     const figmaTokens = processTokens(figmaData);
 
+    // Load explicit allowlist for Button color tokens if provided
+    const BUTTON_COLOR_TOKENS_PATH = path.join(
+      __dirname,
+      "./config/button-color-tokens.json"
+    );
+    let buttonTokensOnly = figmaTokens;
+    if (fs.existsSync(BUTTON_COLOR_TOKENS_PATH)) {
+      const allow = JSON.parse(
+        fs.readFileSync(BUTTON_COLOR_TOKENS_PATH, "utf8")
+      );
+      const allowSet = new Set(
+        (allow || []).map((n) => String(n).replace(/^--/, "").toLowerCase())
+      );
+      const pick = (obj = {}) => {
+        const o = {};
+        for (const [n, v] of Object.entries(obj)) {
+          if (allowSet.has(n.toLowerCase())) o[n] = v;
+        }
+        return o;
+      };
+      buttonTokensOnly = {
+        colors: pick(figmaTokens.colors),
+        spacing: {},
+        typography: {},
+        effects: {},
+        sizes: {},
+        breakpoints: {},
+      };
+      console.log(
+        `🔎 Using button color token allowlist (${allowSet.size} tokens)`
+      );
+    } else {
+      console.log(
+        "ℹ️  No button-color allowlist found; defaulting to previous filter"
+      );
+      const includesButton = (name) =>
+        name.includes("button") || name.includes("btn");
+      const filtered = {
+        colors: {},
+        spacing: {},
+        typography: {},
+        effects: {},
+        sizes: {},
+        breakpoints: {},
+      };
+      for (const [n, v] of Object.entries(figmaTokens.colors || {})) {
+        if (includesButton(n)) filtered.colors[n] = v;
+      }
+      buttonTokensOnly = filtered;
+    }
+
     // Compare and merge tokens
     const { mergedTokens, changes, totalChanges } = compareAndMergeTokens(
-      figmaTokens,
+      buttonTokensOnly,
       currentTokens
     );
 

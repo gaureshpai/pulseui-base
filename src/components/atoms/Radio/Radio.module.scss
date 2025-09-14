@@ -1,7 +1,7 @@
 @use "../../../styles/_tokens.scss" as *;
 
 .radio {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: var(--spacing-sm);
   cursor: pointer;
@@ -212,8 +212,8 @@
   line-height: var(--line-height-md);
 
   .radioButton {
-    width: var(--icon-size-sm);
-    height: var(--icon-size-sm);
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
   }
 }
 
@@ -222,8 +222,8 @@
   line-height: var(--line-height-lg);
 
   .radioButton {
-    width: var(--icon-size-md);
-    height: var(--icon-size-md);
+    width: var(--icon-size-lg);
+    height: var(--icon-size-lg);
   }
 }
 
@@ -232,8 +232,8 @@
   line-height: var(--line-height-xl);
 
   .radioButton {
-    width: var(--icon-size-md);
-    height: var(--icon-size-md);
+    width: var(--icon-size-xl);
+    height: var(--icon-size-xl);
   }
 }
 

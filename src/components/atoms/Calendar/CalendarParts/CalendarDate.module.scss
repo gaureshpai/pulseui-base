@@ -175,7 +175,7 @@
 }
 
 .active-passive {
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface-tertiary);
   color: var(--color-text-primary);
 
   .indicator {
@@ -184,7 +184,7 @@
   }
 
   &:hover:not(:disabled) {
-    background-color: var(--color-surface-tertiary);
+    background-color: var(--color-surface-info);
   }
 }
 
@@ -221,7 +221,7 @@
   }
 
   &.active-passive:hover:not(:disabled) {
-    background-color: var(--color-surface-tertiary);
+    background-color: var(--color-surface-info);
   }
 }
 
@@ -308,7 +308,7 @@
   }
 
   &.in-range {
-    background-color: var(--color-surface-secondary);
+    background-color: var(--color-surface-tertiary);
   }
 
   &.disabled.in-range {

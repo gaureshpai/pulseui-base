@@ -1,0 +1,212 @@
+@use "../../../styles/_tokens.scss" as *;
+
+.toggleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  position: relative;
+}
+
+.label {
+  font-size: inherit;
+  line-height: inherit;
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  font-family: var(--font-family);
+
+  &.disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+}
+
+.required {
+  color: var(--color-error);
+  margin-left: var(--spacing-xs);
+}
+
+.toggleGroup {
+  display: flex;
+  background-color: var(--color-surface-3);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-xs);
+  gap: var(--spacing-xs);
+  border: var(--border-width-thin) solid var(--color-border-secondary);
+  transition: var(--motion-transition-normal);
+  min-width: 300px;
+
+  &:focus-within {
+    border-color: var(--color-primary);
+  }
+
+  &.error {
+    border-color: var(--color-error);
+  }
+
+  &.disabled {
+    opacity: var(--opacity-50);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.toggleOption {
+  flex: 1;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-primary);
+  font-size: inherit;
+  line-height: inherit;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  min-height: var(--size-md);
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  transform: translateX(0);
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+
+  &.selected {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    box-shadow: var(--shadow-sm);
+    transform: translateX(0) scale(1.02);
+    z-index: 1;
+
+    &:hover:not(:disabled) {
+      background-color: var(--color-surface-hover);
+    }
+  }
+
+  &.disabled {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+    background-color: var(--color-surface-tertiary);
+  }
+}
+
+.errorMessage {
+  font-size: inherit;
+  color: var(--color-error);
+  margin-top: var(--spacing-xs);
+  font-family: var(--font-family);
+}
+
+// Size variants using design system tokens
+.size-sm {
+  .toggleGroup {
+    padding: var(--spacing-xs);
+    gap: var(--spacing-xs);
+  }
+
+  .toggleOption {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-height: var(--size-sm);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+  }
+
+  .label {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+  }
+
+  .errorMessage {
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-xs);
+  }
+}
+
+.size-md {
+  .toggleGroup {
+    padding: var(--spacing-xs);
+    gap: var(--spacing-xs);
+  }
+
+  .toggleOption {
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: var(--size-md);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+  }
+
+  .label {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+  }
+
+  .errorMessage {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+  }
+}
+
+.size-lg {
+  .toggleGroup {
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+
+  .toggleOption {
+    padding: var(--spacing-md) var(--spacing-lg);
+    min-height: var(--size-lg);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-lg);
+  }
+
+  .label {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-lg);
+  }
+
+  .errorMessage {
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+  }
+}
+
+// Responsive design using design system breakpoints
+@media (max-width: var(--breakpoint-sm)) {
+  .toggleGroup {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .toggleOption {
+    width: 100%;
+  }
+}
+
+// Enhanced hover states using design system
+.toggleOption:hover:not(.disabled):not(.selected) {
+  transform: translateX(0) scale(1.01);
+  transition: transform 0.2s ease;
+}
+
+// Animation for smooth transitions
+.toggleOption {
+  animation: toggleSlide 0.2s var(--motion-easing-ease-out);
+}
+
+@keyframes toggleSlide {
+  from {
+    opacity: 0.8;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

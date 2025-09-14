@@ -29,27 +29,25 @@ export interface SelectProps extends WithSxProps {
 }
 
 export const Select = forwardRef<HTMLButtonElement, SelectProps>(
-  (
-    {
-      id,
-      name,
-      value,
-      defaultValue,
-      options,
-      placeholder = "Select an option",
-      disabled = false,
-      required = false,
-      error,
-      size = "md",
-      label,
-      onChange,
-      onFocus,
-      onBlur,
-      className = "",
-      sx,
-      style,
-    },
-    ) => {
+  ({
+    id,
+    name,
+    value,
+    defaultValue,
+    options,
+    placeholder = "Select an option",
+    disabled = false,
+    required = false,
+    error,
+    size = "md",
+    label,
+    onChange,
+    onFocus,
+    onBlur,
+    className = "",
+    sx,
+    style,
+  }) => {
     const [internalValue, setInternalValue] = useState(defaultValue || "");
     const [isOpen, setIsOpen] = useState(false);
     const listboxId = React.useId();
@@ -154,7 +152,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(
       }
     };
 
-    const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+    const selectId = id || React.useId();
     const errorId = error ? `${selectId}-error` : undefined;
 
     const containerClasses = combineClassNames(

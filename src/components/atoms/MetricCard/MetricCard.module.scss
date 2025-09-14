@@ -1,0 +1,185 @@
+@use "../../../styles/_tokens.scss" as *;
+
+.metricCard {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+  border: var(--border-width-thin) solid var(--color-border-secondary);
+  transition: all var(--motion-duration-normal) var(--motion-easing-ease-out);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &.clickable {
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+      border-color: var(--color-border-primary);
+    }
+
+    &:focus-visible {
+      outline: var(--border-width-thin) solid var(--color-border-focus);
+      outline-offset: var(--spacing-xs);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  height: 100%;
+}
+
+.textContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  position: relative;
+}
+
+.titleValueGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: var(--spacing-sm);
+}
+
+.title {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.value {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  margin: var(--spacing-xs) 0;
+}
+
+.trendContainer {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-sm);
+  padding-top: var(--spacing-lg);
+}
+
+.trendPositive {
+  color: var(--color-success);
+}
+
+.trendNegative {
+  color: var(--color-error);
+}
+
+.trendIcon {
+  flex-shrink: 0;
+}
+
+.trendText {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.4;
+  display: flex;
+  align-items: center;
+}
+
+.trendPercentage {
+  font-weight: var(--font-weight-semibold);
+  color: inherit;
+  padding-right: var(--spacing-sm);
+}
+
+.trendDescription {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-normal);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  background-color: #8b5cf6; /* Purple background like in the image */
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.icon {
+  color: white;
+  font-size: 24px; /* Larger icon size */
+}
+
+// Icon variant colors - Using brand-specific tokens with fallbacks
+.icon-primary {
+  background-color: var(--metric-brand-a, #6366f1);
+}
+
+.icon-secondary {
+  background-color: var(--metric-brand-b, #8b5cf6);
+}
+
+.icon-success {
+  background-color: var(--metric-brand-c, #059669);
+}
+
+.icon-warning {
+  background-color: var(--metric-brand-d, #f59e0b);
+}
+
+.icon-error {
+  background-color: var(--metric-brand-e, #dc2626);
+}
+
+.icon-info {
+  background-color: var(--metric-brand-f, #0891b2);
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .metricCard {
+    padding: var(--spacing-md);
+    min-height: 100px;
+  }
+
+  .value {
+    font-size: var(--font-size-xl);
+  }
+
+  .iconContainer {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+  }
+
+  .iconContainer {
+    align-self: flex-end;
+  }
+}

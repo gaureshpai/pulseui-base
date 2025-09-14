@@ -114,51 +114,31 @@
   }
 
   &.variant-subtle {
-    background-color: var(
-      --color-button-secondary,
-      var(--color-surface-secondary)
-    );
-    color: var(--color-button-text, var(--color-primary));
-    border: var(--border-width-thin) solid
-      var(--color-button-secondary, var(--color-surface-secondary));
+    background-color: transparent;
+    color: var(--color-primary);
+    border: none;
 
     &:hover:not(:disabled) {
-      background-color: var(
-        --color-button-secondary-hover,
-        var(--color-surface-tertiary)
-      );
-      border-color: var(
-        --color-button-secondary-hover,
-        var(--color-surface-tertiary)
-      );
+      background-color: var(--color-blue-0);
     }
 
     &:active:not(:disabled) {
-      background-color: var(
-        --color-button-secondary-active,
-        var(--color-surface-tertiary)
-      );
-      border-color: var(
-        --color-button-secondary-active,
-        var(--color-surface-tertiary)
-      );
+      background-color: var(--color-blue-1);
       transform: translateY(1px);
     }
   }
 
   &.variant-light {
-    background-color: transparent;
+    background-color: var(--color-blue-0);
     color: var(--color-primary);
-    border: var(--border-width-thin) solid transparent;
+    border: none;
 
     &:hover:not(:disabled) {
-      background-color: var(--color-surface-1);
-      border-color: var(--color-border-secondary);
+      background-color: var(--color-blue-1);
     }
 
     &:active:not(:disabled) {
-      background-color: var(--color-surface-2);
-      border-color: var(--color-border-primary);
+      background-color: var(--color-blue-2);
       transform: translateY(1px);
     }
   }

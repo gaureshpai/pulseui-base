@@ -15,6 +15,7 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
+  width: 280px;
 
   &.open {
     transform: translateX(0);
@@ -35,7 +36,7 @@
       var(--motion-easing-ease-out),
     visibility var(--motion-duration-normal) var(--motion-easing-ease-out);
 
-  .leftDrawer.open & {
+  &.visible {
     opacity: 1;
     visibility: visible;
   }
@@ -47,29 +48,17 @@
   align-items: center;
   padding: var(--spacing-lg);
   border-bottom: var(--border-width-thin) solid var(--color-border-secondary);
-  background-color: var(--color-surface-secondary);
+  background-color: var(--color-surface);
   flex-shrink: 0;
 }
 
-.brandSection {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-}
-
-.brandLogo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-}
-
-.brandName {
+.menuTitle {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-primary);
   margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .closeButton {
@@ -95,38 +84,33 @@
   }
 }
 
-.drawerNavigation {
+.menuNavigation {
   flex: 1;
   padding: var(--spacing-md) 0;
   overflow-y: auto;
 }
 
-.drawerSection {
-  border-bottom: var(--border-width-thin) solid var(--color-border-tertiary);
-
-  &:last-child {
-    border-bottom: none;
-  }
+.menuItem {
+  margin-bottom: var(--spacing-xs);
 }
 
-.sectionHeader {
+.menuButton {
   width: 100%;
-  background: none;
-  border: none;
-  padding: var(--spacing-md) var(--spacing-lg);
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: none;
+  border: none;
+  cursor: pointer;
   color: var(--color-text-primary);
   font-size: var(--font-size-md);
-  font-weight: var(--font-weight-medium);
+  font-weight: var(--font-weight-normal);
   text-align: left;
   transition: all var(--motion-duration-normal) var(--motion-easing-ease-out);
 
-  &:hover {
+  &:hover:not(.actionButton) {
     background-color: var(--color-surface-secondary);
-    color: var(--color-text-primary);
   }
 
   &:focus-visible {
@@ -135,94 +119,26 @@
   }
 }
 
-.sectionIcon {
-  flex-shrink: 0;
-  color: var(--color-text-muted);
-}
-
-.sectionTitle {
-  flex: 1;
-  text-align: left;
-}
-
-.expandIcon {
-  flex-shrink: 0;
-  color: var(--color-text-muted);
-  transition: transform var(--motion-duration-normal)
-    var(--motion-easing-ease-out);
-}
-
-.sectionContent {
-  background-color: var(--color-surface-secondary);
-  overflow: hidden;
-  transition: all var(--motion-duration-normal) var(--motion-easing-ease-out);
-  position: relative;
-
-  // Add vertical line indicator for expanded content
-  &::before {
-    content: "";
-    position: absolute;
-    left: var(--spacing-lg);
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background-color: var(--color-border-tertiary);
-  }
-}
-
-.drawerItem {
-  &.level0 {
-    .itemButton {
-      padding: var(--spacing-sm) var(--spacing-lg);
-      font-size: var(--font-size-md);
-    }
-  }
-
-  &.level1 {
-    .itemButton {
-      padding: var(--spacing-xs) var(--spacing-lg);
-      font-size: var(--font-size-sm);
-      margin-left: var(--spacing-lg);
-    }
-  }
-}
-
-.itemButton {
-  width: 100%;
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-md);
-  text-align: left;
-  transition: all var(--motion-duration-normal) var(--motion-easing-ease-out);
+.actionButton {
+  color: var(--color-primary) !important;
+  font-weight: var(--font-weight-medium);
 
   &:hover {
-    background-color: var(--color-surface-tertiary);
-    color: var(--color-text-primary);
-  }
-
-  &:focus-visible {
-    outline: var(--border-width-thin) solid var(--color-border-focus);
-    outline-offset: var(--spacing-xs);
+    background-color: var(--color-primary-surface);
+    color: var(--color-primary) !important;
   }
 }
 
-.itemIcon {
+.menuIcon {
   flex-shrink: 0;
-  color: var(--color-text-muted);
 }
 
-.itemLabel {
+.menuLabel {
   flex: 1;
-  text-align: left;
 }
 
-.nestedItems {
-  margin-left: var(--spacing-lg);
+.actionLabel {
+  color: var(--color-primary) !important;
 }
 
 // Responsive adjustments
@@ -235,28 +151,7 @@
     padding: var(--spacing-md);
   }
 
-  .sectionHeader {
-    padding: var(--spacing-md);
-  }
-
-  .itemButton {
+  .menuButton {
     padding: var(--spacing-md) var(--spacing-md);
-  }
-}
-
-// Animation for accordion
-.sectionContent {
-  animation: slideDown var(--motion-duration-normal)
-    var(--motion-easing-ease-out);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    max-height: 0;
-  }
-  to {
-    opacity: 1;
-    max-height: 500px;
   }
 }

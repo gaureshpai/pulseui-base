@@ -49,7 +49,7 @@ export interface BadgeProps extends WithSxProps {
 }
 
 export const Badge: React.FC<BadgeProps> = ({
-  children,
+  children = "BADGE",
   leftIcon,
   rightIcon,
   variant = "dot",

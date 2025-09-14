@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Button.module.scss";
 import { Icon } from "../Icon";
+import { Spinner } from "../Spinner";
 import {
   Download,
   Upload,
@@ -38,6 +39,10 @@ export interface ButtonProps extends WithSxProps {
   onClick?: () => void;
   /** Disabled state */
   disabled?: boolean;
+  /** Loading state */
+  loading?: boolean;
+  /** Loading text (defaults to "Loading") */
+  loadingText?: string;
   /** Button type */
   type?: "button" | "submit" | "reset";
   /** Accessibility label (overrides children for screen readers) */
@@ -80,6 +85,8 @@ export const Button: React.FC<ButtonProps> = ({
   onClick,
   className = "",
   disabled = false,
+  loading = false,
+  loadingText = "Loading",
   type = "button",
   ariaLabel,
   ariaPressed,
@@ -187,7 +194,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={buttonClasses}
       onClick={onClick}
       onKeyDown={handleKeyDown}
-      disabled={disabled || state === "disabled"}
+      disabled={disabled || state === "disabled" || loading}
       style={sxStyle}
       aria-label={ariaLabel}
       aria-pressed={ariaPressed}
@@ -204,25 +211,36 @@ export const Button: React.FC<ButtonProps> = ({
       tabIndex={tabIndex}
       role={type === "button" ? undefined : type}
     >
-      {leftIconComponent && (
-        <Icon
-          icon={leftIconComponent}
-          size={iconSize}
-          color="inherit"
-          className={styles.left}
-          aria-hidden="true"
-        />
-      )}
-      <span className={styles.content}>{children}</span>
-      {rightIconComponent && (
-        <Icon
-          icon={rightIconComponent}
-          size={iconSize}
-          color="inherit"
-          className={styles.right}
-          aria-hidden="true"
-          sx={{ paddingBottom: 0, marginBottom: 0 }}
-        />
+      {loading ? (
+        <>
+          <Spinner size={iconSize} color="primary" />
+          <span className={styles.content} style={{ marginLeft: "8px" }}>
+            Loading!
+          </span>
+        </>
+      ) : (
+        <>
+          {leftIconComponent && (
+            <Icon
+              icon={leftIconComponent}
+              size={iconSize}
+              color="inherit"
+              className={styles.left}
+              aria-hidden="true"
+            />
+          )}
+          <span className={styles.content}>{children}</span>
+          {rightIconComponent && (
+            <Icon
+              icon={rightIconComponent}
+              size={iconSize}
+              color="inherit"
+              className={styles.right}
+              aria-hidden="true"
+              sx={{ paddingBottom: 0, marginBottom: 0 }}
+            />
+          )}
+        </>
       )}
     </button>
   );

@@ -36,7 +36,15 @@ export interface InputProps extends WithSxProps {
   /** Right icon */
   rightIcon?: SvgIconComponent | string;
   /** Input type */
-  type?: "text" | "email" | "password" | "number" | "tel" | "url" | "search";
+  type?:
+    | "text"
+    | "email"
+    | "password"
+    | "number"
+    | "tel"
+    | "url"
+    | "search"
+    | "date";
   /** Disabled state */
   disabled?: boolean;
   /** Readonly state */
@@ -45,6 +53,8 @@ export interface InputProps extends WithSxProps {
   required?: boolean;
   /** Show password toggle for password type */
   showPasswordToggle?: boolean;
+  /** Show calendar icon for date type */
+  showCalendarIcon?: boolean;
   /** Password visibility state */
   passwordVisible?: boolean;
   /** Password visibility change handler */
@@ -129,6 +139,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       readonly = false,
       required = false,
       showPasswordToggle = true,
+      showCalendarIcon = true,
       passwordVisible: externalPasswordVisible,
       onPasswordVisibilityChange,
 

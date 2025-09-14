@@ -1,0 +1,161 @@
+@use "../../../styles/_tokens.scss" as *;
+
+.spinner {
+  display: inline-block;
+  position: relative;
+  width: var(--spacing-lg);
+  height: var(--spacing-lg);
+}
+
+.spinnerRing {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--color-border-secondary);
+  border-radius: 50%;
+  animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: var(--color-primary) transparent transparent transparent;
+}
+
+.spinnerRing:nth-child(1) {
+  animation-delay: -0.45s;
+}
+
+.spinnerRing:nth-child(2) {
+  animation-delay: -0.3s;
+}
+
+.spinnerRing:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+.spinnerRing:nth-child(4) {
+  animation-delay: 0s;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+// Size variants
+.size-xs {
+  width: var(--spacing-xs);
+  height: var(--spacing-xs);
+
+  .spinnerRing {
+    border-width: 1px;
+  }
+}
+
+.size-sm {
+  width: var(--spacing-sm);
+  height: var(--spacing-sm);
+
+  .spinnerRing {
+    border-width: 1.5px;
+  }
+}
+
+.size-md {
+  width: var(--spacing-lg);
+  height: var(--spacing-lg);
+
+  .spinnerRing {
+    border-width: 2px;
+  }
+}
+
+.size-lg {
+  width: var(--spacing-xl);
+  height: var(--spacing-xl);
+
+  .spinnerRing {
+    border-width: 2.5px;
+  }
+}
+
+.size-xl {
+  width: var(--spacing-2xl);
+  height: var(--spacing-2xl);
+
+  .spinnerRing {
+    border-width: 3px;
+  }
+}
+
+// Color variants
+.color-primary {
+  .spinnerRing {
+    border-color: var(--color-primary) transparent transparent transparent;
+  }
+}
+
+.color-secondary {
+  .spinnerRing {
+    border-color: var(--color-secondary) transparent transparent transparent;
+  }
+}
+
+.color-success {
+  .spinnerRing {
+    border-color: var(--color-success) transparent transparent transparent;
+  }
+}
+
+.color-warning {
+  .spinnerRing {
+    border-color: var(--color-warning) transparent transparent transparent;
+  }
+}
+
+.color-error {
+  .spinnerRing {
+    border-color: var(--color-error) transparent transparent transparent;
+  }
+}
+
+.color-info {
+  .spinnerRing {
+    border-color: var(--color-info) transparent transparent transparent;
+  }
+}
+
+.color-muted {
+  .spinnerRing {
+    border-color: var(--color-text-muted) transparent transparent transparent;
+  }
+}
+
+// Speed variants
+.speed-slow {
+  .spinnerRing {
+    animation-duration: 2s;
+  }
+}
+
+.speed-normal {
+  .spinnerRing {
+    animation-duration: 1.2s;
+  }
+}
+
+.speed-fast {
+  .spinnerRing {
+    animation-duration: 0.8s;
+  }
+}
+
+// State variants
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+

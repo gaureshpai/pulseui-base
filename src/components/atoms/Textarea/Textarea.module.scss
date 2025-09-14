@@ -68,13 +68,13 @@
   // Focus styles
   &:focus {
     border-color: var(--color-input-border-focus);
-    box-shadow: 0 0 0 var(--border-width-normal) var(--color-input-border-focus);
+    box-shadow: 0 0 0 var(--border-width-thin) var(--color-border-focus);
     transition: none;
   }
 
   // Hover styles
   &:hover:not(:disabled) {
-    border-color: var(--color-border-primary);
+    border-color: var(--color-input-border-focus);
     transition: none;
   }
 
@@ -91,9 +91,13 @@
   &.error {
     border-color: var(--color-error);
 
+    &:hover:not(:disabled) {
+      border-color: var(--color-error);
+    }
+
     &:focus {
       border-color: var(--color-error);
-      box-shadow: 0 0 0 var(--border-width-normal) var(--color-error);
+      box-shadow: 0 0 0 var(--border-width-thin) var(--color-error);
     }
   }
 }
@@ -104,8 +108,9 @@
 
 .footer {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   min-height: var(--line-height-xs);
+  gap: var(--spacing-xs);
 }
 
 .caption {
@@ -120,6 +125,10 @@
   color: var(--color-error) !important;
   line-height: var(--line-height-xs);
   margin: 0;
+}
+
+.errorIcon {
+  flex-shrink: 0;
 }
 
 // Disabled state

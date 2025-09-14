@@ -303,3 +303,6 @@ export {
   Storage,
   CloudQueue,
 } from "@mui/icons-material";
+
+// Custom Icons
+export { TrendUp, TrendDown } from "./CustomIcons";

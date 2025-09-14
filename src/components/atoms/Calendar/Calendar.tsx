@@ -6,7 +6,6 @@ import { mergeSxWithStyles, combineClassNames } from "../../../utils/sxUtils";
 import { CalendarDate, type CalendarDateProps } from "./CalendarParts";
 import { CalendarTitle } from "./CalendarParts";
 
-
 export interface CalendarProps extends WithSxProps {
   /** The date to display (defaults to current date) */
   date?: Date;
@@ -16,7 +15,9 @@ export interface CalendarProps extends WithSxProps {
   onDateSelect?: (date: Date) => void;
   /** Callback when a year is selected */
   onYearSelect?: (year: number) => void;
-  
+  /** Callback when a date range is selected */
+  onRangeSelect?: (startDate: Date | null, endDate: Date | null) => void;
+
   /** Callback when month/year changes */
   onMonthChange?: (date: Date) => void;
   /** Callback when decade changes */
@@ -35,6 +36,8 @@ export interface CalendarProps extends WithSxProps {
   rangeStart?: Date;
   /** Range selection end date */
   rangeEnd?: Date;
+  /** Whether to enable range selection mode */
+  rangeSelection?: boolean;
   /** Size of the calendar */
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   /** Whether to show navigation arrows */
@@ -62,12 +65,14 @@ export const Calendar: React.FC<CalendarProps> = ({
   view = "month",
   onDateSelect,
   onYearSelect,
+  onRangeSelect,
   onMonthChange,
   onCenturyChange,
   onViewChange,
   selectedDate,
   rangeStart,
   rangeEnd,
+  rangeSelection = false,
   size = "md",
   showNavigation = true,
   showDayLabels = true,
@@ -84,9 +89,17 @@ export const Calendar: React.FC<CalendarProps> = ({
   sx,
   style,
 }) => {
-  
   const [currentDate, setCurrentDate] = useState(date);
   const [currentYear, setCurrentYear] = useState(date.getFullYear());
+
+  // Internal range selection state
+  const [internalRangeStart, setInternalRangeStart] = useState<Date | null>(
+    rangeStart || null
+  );
+  const [internalRangeEnd, setInternalRangeEnd] = useState<Date | null>(
+    rangeEnd || null
+  );
+  const [isSelectingRange, setIsSelectingRange] = useState(false);
 
   const { style: sxStyle, className: sxClassName } = mergeSxWithStyles(
     sx,
@@ -111,7 +124,6 @@ export const Calendar: React.FC<CalendarProps> = ({
     // First day of the month
     const firstDay = new Date(year, month, 1);
     // Last day of the month
-    
 
     // Start of the calendar (including previous month's dates)
     const startDate = new Date(firstDay);
@@ -145,17 +157,25 @@ export const Calendar: React.FC<CalendarProps> = ({
         (selected) => selected.toDateString() === dateToAdd.toDateString()
       );
 
+      // Use internal range state for range selection
+      const effectiveRangeStart = rangeSelection
+        ? internalRangeStart
+        : rangeStart;
+      const effectiveRangeEnd = rangeSelection ? internalRangeEnd : rangeEnd;
+
       const isRangeStart = !!(
-        rangeStart && dateToAdd.toDateString() === rangeStart.toDateString()
+        effectiveRangeStart &&
+        dateToAdd.toDateString() === effectiveRangeStart.toDateString()
       );
       const isRangeEnd = !!(
-        rangeEnd && dateToAdd.toDateString() === rangeEnd.toDateString()
+        effectiveRangeEnd &&
+        dateToAdd.toDateString() === effectiveRangeEnd.toDateString()
       );
       const isInRange = !!(
-        rangeStart &&
-        rangeEnd &&
-        dateToAdd >= rangeStart &&
-        dateToAdd <= rangeEnd
+        effectiveRangeStart &&
+        effectiveRangeEnd &&
+        dateToAdd >= effectiveRangeStart &&
+        dateToAdd <= effectiveRangeEnd
       );
 
       dates.push({
@@ -170,7 +190,16 @@ export const Calendar: React.FC<CalendarProps> = ({
     }
 
     return dates;
-  }, [currentDate, selectedDate, rangeStart, rangeEnd, view]);
+  }, [
+    currentDate,
+    selectedDate,
+    rangeStart,
+    rangeEnd,
+    rangeSelection,
+    internalRangeStart,
+    internalRangeEnd,
+    view,
+  ]);
 
   // Calculate month data for year view
   const monthData = useMemo(() => {
@@ -255,8 +284,39 @@ export const Calendar: React.FC<CalendarProps> = ({
   const handleDateClick = (clickedDate: Date) => {
     if (disabled) return;
 
-    if (onDateSelect) {
-      onDateSelect(clickedDate);
+    if (rangeSelection) {
+      // Range selection logic
+      if (!internalRangeStart || (internalRangeStart && internalRangeEnd)) {
+        // Start new range selection
+        setInternalRangeStart(clickedDate);
+        setInternalRangeEnd(null);
+        setIsSelectingRange(true);
+
+        if (onRangeSelect) {
+          onRangeSelect(clickedDate, null);
+        }
+      } else if (internalRangeStart && !internalRangeEnd) {
+        // Complete range selection
+        const startDate = internalRangeStart;
+        const endDate = clickedDate;
+
+        // Ensure start date is before end date
+        const finalStartDate = startDate <= endDate ? startDate : endDate;
+        const finalEndDate = startDate <= endDate ? endDate : startDate;
+
+        setInternalRangeStart(finalStartDate);
+        setInternalRangeEnd(finalEndDate);
+        setIsSelectingRange(false);
+
+        if (onRangeSelect) {
+          onRangeSelect(finalStartDate, finalEndDate);
+        }
+      }
+    } else {
+      // Single date selection
+      if (onDateSelect) {
+        onDateSelect(clickedDate);
+      }
     }
   };
 
@@ -285,7 +345,6 @@ export const Calendar: React.FC<CalendarProps> = ({
   };
 
   // Enhanced year click handler for better connected navigation
-  
 
   // Enhanced month click handler for better connected navigation
   const handleMonthClick = (month: number) => {
@@ -313,10 +372,6 @@ export const Calendar: React.FC<CalendarProps> = ({
     if (disabled) return;
     setCurrentYear(currentYear + 1);
   };
-
-  
-
-  
 
   // Enhanced decade view handler for better connected navigation
   const handleYearInDecadeClick = (year: number) => {
@@ -362,10 +417,6 @@ export const Calendar: React.FC<CalendarProps> = ({
       year: "numeric",
     });
   };
-
-  
-
-  
 
   // Navigation handlers based on view
   const handlePrevious = () => {
@@ -456,7 +507,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   };
 
   return (
-    <div className={calendarClasses} style={sxStyle} id={id} >
+    <div className={calendarClasses} style={sxStyle} id={id}>
       {/* Header */}
       <div className={styles.header}>
         {showNavigation && (
